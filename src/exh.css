@@ -1,0 +1,18 @@
+/* Default values are for e-h. Ex will override them. */
+:root {
+	--eh-bgc: #edebdf;
+	--eh-tbc: #5c0d11;
+}
+
+#info_div {
+	background-color: var(--eh-bgc);
+	border-color: var(--eh-tbc);
+	border-style: solid;
+	border-width: 1px;
+	font-size: 9pt;
+	max-width: 400px;
+	padding: 5px;
+	position: absolute;
+	visibility: hidden; /* "display: none" does not work! */
+	z-index: 100;
+}
