@@ -2,7 +2,7 @@
 // @name        E(x)Hentai Tags Preview
 // @author      fp555
 // @namespace   exhtp
-// @version     1.0.1
+// @version     1.1
 // @description Adds a preview of gallery tags on hover.
 // @include     https://exhentai.org/
 // @include     https://exhentai.org/?*
@@ -33,7 +33,9 @@
   tooltip.style.color = isex ? '#f1f1f1' : '#5c0d11';
   tooltip.style.border = '1px solid ' + (isex ? '#f1f1f1' : '#5c0d11');
   document.body.insertAdjacentElement('beforeend', tooltip);
-  var glist = document.querySelectorAll('.it5');
+  var thumblist = document.querySelectorAll('.id3 a img');
+  if(thumblist.length > 0) for(var i of thumblist) i.removeAttribute('title');
+  var glist = document.querySelectorAll('.it5,.id3');
   var hovering = false; // fix mouseleave timing bug
   for(var g of glist) { 
     g.addEventListener('mouseenter', function(e) {
