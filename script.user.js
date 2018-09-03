@@ -2,7 +2,7 @@
 // @name        E(x)Hentai Tags Preview
 // @author      fp555
 // @namespace   exhtp
-// @version     1.2
+// @version     1.3
 // @description Adds a preview of gallery tags on hover.
 // @include     https://exhentai.org/
 // @include     https://exhentai.org/?*
@@ -24,19 +24,24 @@
 
 (function() {
   'use strict';
+  
+  let siteStyle = function(attr) {
+    const isex = window.location.toString().indexOf('exhentai.org') >= 0;
+    const styles = {
+      "backgroundColor": {true: "#4f535b", false: "#edebdf"},
+      "color": {true: "#f1f1f1", false: "#5c0d11"},
+      "borderColor": {true: "#f1f1f1", false: "#5c0d11"}
+    };
+    return styles[attr][isex];
+  };
   var tooltip = document.createElement('div');
   tooltip.innerHTML = 'Loading...';
   tooltip.id = 'info_div';
-  tooltip.style.cssText = 'visibility:hidden;position:absolute;padding:5px;z-index:9;max-width:400px;font-size:9pt';
-  let isex = window.location.toString().indexOf('exhentai.org') >= 0;
-  tooltip.style.backgroundColor = isex ? '#4f535b' : '#edebdf';
-  tooltip.style.color = isex ? '#f1f1f1' : '#5c0d11';
-  tooltip.style.border = '1px solid ' + (isex ? '#f1f1f1' : '#5c0d11');
+  tooltip.style.cssText = 'background-color:' + siteStyle("backgroundColor") + ';color:' + siteStyle("color") + ';border:1px solid ' + siteStyle("borderColor") + ';max-width:400px;font-size:9pt;padding:5px;position:absolute;visibility:hidden;z-index:9';
   document.body.insertAdjacentElement('beforeend', tooltip);
   for(let i of document.querySelectorAll('.id3 a img')) i.removeAttribute('title'); // remove thumbnails titles
-  var glist = document.querySelectorAll('.it5,.id3');
   var hovering = false; // fix mouseleave timing bug
-  for(var g of glist) { 
+  for(let g of document.querySelectorAll('.it5,.id3')) { 
     g.addEventListener('mouseenter', function(e) {
       var xhr = new XMLHttpRequest();
       xhr.open('GET', e.target.firstElementChild.getAttribute('href'));
