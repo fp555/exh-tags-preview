@@ -1,10 +1,15 @@
+## NOTICE:
+**this has been partially obsoleted by the Mar 19, 2019 update:** native *Compact* or *Extended* views can be now used to display tags under gallery titles, with support for Tag Filtering.
+
+---
+
 # E(x)hentai Tags Preview
 This is an unofficial userscript for e-hentai/exhentai **(WARNING: NSFW websites)** that displays related tags when you hover over a gallery link. Both list and thumbnails view are supported.
 
 No unrelated features, no jQuery, no reporting your sick fetishes to the NSA. For now.
 
 ## Install
-If your browser does not natively support userscripts, install something like [Greasemonkey](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/) (**v3.x only**), [Tampermonkey](https://tampermonkey.net/) or [Violentmonkey](https://violentmonkey.github.io/get-it/), then **[click here to install the script](https://raw.githubusercontent.com/fp555/exh-tags-preview/master/script.user.js)**
+If your browser does not natively support userscripts, install something like [Greasemonkey](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/) (**v3.x only**), [Tampermonkey](https://tampermonkey.net/) or [Violentmonkey](https://violentmonkey.github.io/get-it/), then **[click here to install the script](https://raw.githubusercontent.com/fp555/exh-tags-preview/legacy/script.user.js)**
 
 ## Troubleshooting
 ### I found a bug! / It doesn't work!
