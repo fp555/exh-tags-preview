@@ -2,7 +2,7 @@
 // @name        E(x)Hentai Tags Preview
 // @author      fp555
 // @namespace   exhtp
-// @version     1.3.2.1
+// @version     1.4
 // @description Adds a preview of gallery tags on hover.
 // @match       *://exhentai.org/*
 // @match       *://e-hentai.org/*
