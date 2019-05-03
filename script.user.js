@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name        E(x)Hentai Tags Preview
 // @author      fp555
-// @namespace   exhtp
-// @version     1.4.1
+// @namespace   fp555/exh-tags-preview
+// @version     1.4.2
 // @description Adds a preview of gallery tags on hover.
 // @match       *://exhentai.org/
 // @match       *://e-hentai.org/
@@ -30,29 +30,24 @@
 (function() {
     "use strict";
     
-    let hovering = false;
-    let tooltip = document.createElement("div");
+    let tooltip = document.body.appendChild(document.createElement("div"));
     let mef = function(e) {
         let xhr = new XMLHttpRequest();
-        xhr.open('GET', e.target.parentElement.getAttribute('href'));
-        xhr.responseType = 'document';
+        xhr.open("GET", e.target.parentElement.getAttribute("href"));
+        xhr.responseType = "document";
         xhr.onload = function() {
-            if(xhr.readyState === xhr.DONE && xhr.status === 200) {
-                tooltip.innerHTML = xhr.responseXML.querySelector('div#taglist').innerHTML;
-                /* display tooltip on top or bottom, according to cursor position */
-                tooltip.style.top = '' + (e.pageY - ((screen.height - e.screenY < tooltip.offsetHeight)? tooltip.offsetHeight : 0)) + 'px';
-                tooltip.style.left = '' + (e.pageX + 10) + 'px';
-                //console.log("pageY:" + e.pageY + " screenheight:" + screen.height + " screenY:" + e.screenY + " offset:" + tooltip.offsetHeight);
-                if(hovering) tooltip.style.visibility = 'visible';
-            }
+            tooltip.innerHTML = xhr.responseXML.querySelector("div#taglist").innerHTML;
+            /* display tooltip on top or bottom, according to cursor position */
+            tooltip.style.top = `${e.pageY - ((screen.height - e.screenY < tooltip.offsetHeight)? tooltip.offsetHeight : 0)}px`;
+            tooltip.style.left = `${e.pageX + 10}px`;
+            tooltip.style.visibility = "visible";
+            //console.log("pageY:" + e.pageY + " screenheight:" + screen.height + " screenY:" + e.screenY + " offset:" + tooltip.offsetHeight);
         };
         xhr.send();
-        hovering = true;
     };
     let mlf = function() {
-        hovering = false;
-        tooltip.style.visibility = 'hidden';
-        tooltip.innerHTML = 'Loading...';
+        tooltip.style.visibility = "hidden";
+        tooltip.innerHTML = "Loading...";
     };
     
     /* main */
@@ -63,10 +58,9 @@
             document.documentElement.style.setProperty("--eh-bgc", "#4f535b");
             document.documentElement.style.setProperty("--eh-tbc", "#f1f1f1");
         }
-        document.body.insertAdjacentElement('beforeend', tooltip);
         if(["m", "p", "t"].includes(document.querySelector("#dms option[selected]").getAttribute("value"))) for(let g of document.querySelectorAll(".glink")) {
-            g.addEventListener('mouseenter', mef);
-            g.addEventListener('mouseleave', mlf);
+            g.addEventListener("mouseenter", mef);
+            g.addEventListener("mouseleave", mlf);
         }
     });
 })();

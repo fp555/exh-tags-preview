@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name        E(x)Hentai Tags Preview
 // @author      fp555
-// @namespace   exhtp
-// @version     1.4.1
+// @namespace   fp555/exh-tags-preview
+// @version     1.4.2
 // @description Adds a preview of gallery tags on hover.
 // @match       *://exhentai.org/
 // @match       *://e-hentai.org/
