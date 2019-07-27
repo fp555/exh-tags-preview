@@ -2,21 +2,14 @@
 // @name        E(x)Hentai Tags Preview
 // @author      fp555
 // @namespace   fp555/exh-tags-preview
-// @version     1.4.2
+// @version     1.4.3
 // @description Adds a preview of gallery tags on hover.
-// @match       *://exhentai.org/
 // @match       *://e-hentai.org/
-// @match       *://exhentai.org/?page=*
 // @match       *://e-hentai.org/?page=*
-// @match       *://exhentai.org/watched*
 // @match       *://e-hentai.org/watched*
-// @match       *://exhentai.org/popular
 // @match       *://e-hentai.org/popular
-// @match       *://exhentai.org/favorites.php*
 // @match       *://e-hentai.org/favorites.php*
-// @match       *://exhentai.org/uploader/*
 // @match       *://e-hentai.org/uploader/*
-// @match       *://exhentai.org/tag/*
 // @match       *://e-hentai.org/tag/*
 // @grant       GM_addStyle
 // @grant       GM_getResourceText

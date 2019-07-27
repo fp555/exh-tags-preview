@@ -2,21 +2,14 @@
 // @name        E(x)Hentai Tags Preview
 // @author      fp555
 // @namespace   fp555/exh-tags-preview
-// @version     1.4.2
+// @version     1.4.3
 // @description Adds a preview of gallery tags on hover.
-// @match       *://exhentai.org/
 // @match       *://e-hentai.org/
-// @match       *://exhentai.org/?page=*
 // @match       *://e-hentai.org/?page=*
-// @match       *://exhentai.org/watched*
 // @match       *://e-hentai.org/watched*
-// @match       *://exhentai.org/popular
 // @match       *://e-hentai.org/popular
-// @match       *://exhentai.org/favorites.php*
 // @match       *://e-hentai.org/favorites.php*
-// @match       *://exhentai.org/uploader/*
 // @match       *://e-hentai.org/uploader/*
-// @match       *://exhentai.org/tag/*
 // @match       *://e-hentai.org/tag/*
 // @grant       GM_addStyle
 // @grant       GM_getResourceText
@@ -53,14 +46,15 @@
     /* main */
     GM_addStyle(GM_getResourceText("exhcss")).then(function() {
         tooltip.id = "info_div";
-        if(window.location.toString().indexOf("exhentai.org") >= 0) {
-            /* Override CSS vars */
-            document.documentElement.style.setProperty("--eh-bgc", "#4f535b");
-            document.documentElement.style.setProperty("--eh-tbc", "#f1f1f1");
-        }
         if(["m", "p", "t"].includes(document.querySelector("#dms option[selected]").getAttribute("value"))) for(let g of document.querySelectorAll(".glink")) {
             g.addEventListener("mouseenter", mef);
             g.addEventListener("mouseleave", mlf);
         }
+    
+    /* WIP
+        let opt = document.querySelector("#dms > div").appendChild(document.createElement("div"));
+        opt.innerHTML = "&#x1F527;";
+        opt.style.cssText = "position:inherit;display:inline-block;font-size:16px;right:25px;bottom:7px;";
+    */
     });
 })();
