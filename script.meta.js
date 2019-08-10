@@ -5,12 +5,21 @@
 // @version     1.4.3
 // @description Adds a preview of gallery tags on hover.
 // @match       *://e-hentai.org/
+// @match       *://e-hentai.org/?f_search=*
 // @match       *://e-hentai.org/?page=*
-// @match       *://e-hentai.org/watched*
+// @match       *://e-hentai.org/watched
 // @match       *://e-hentai.org/popular
 // @match       *://e-hentai.org/favorites.php*
 // @match       *://e-hentai.org/uploader/*
 // @match       *://e-hentai.org/tag/*
+// @match       *://exhentai.org/
+// @match       *://exhentai.org/?f_search=*
+// @match       *://exhentai.org/?page=*
+// @match       *://exhentai.org/watched
+// @match       *://exhentai.org/popular
+// @match       *://exhentai.org/favorites.php*
+// @match       *://exhentai.org/uploader/*
+// @match       *://exhentai.org/tag/*
 // @grant       GM_addStyle
 // @grant       GM_getResourceText
 // @resource    exhcss https://raw.githubusercontent.com/fp555/exh-tags-preview/master/exh.css

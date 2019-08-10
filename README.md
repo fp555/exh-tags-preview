@@ -1,12 +1,11 @@
-###### GOODNIGHT SWEET PRINCE (Press F to pay respects)
 <p align="center">
-  <img src="https://img.fireden.net/a/image/1453/24/1453240452439.jpg" alt="sadpanda" width="300" height="300" />
+  <img src="https://pbs.twimg.com/profile_images/855314578271477762/2SQq9hDU.jpg" alt="sadpanda" width="300" height="300" />
 </p>
 
 ---
 
-# E-Hentai Tags Preview
-This is an unofficial userscript for e-hentai **(WARNING: NSFW)** that displays related tags when you hover over a gallery link while using **Minimal**, **Minimal+** and **Thumbnails** views. These three are currently hardcoded, but I plan to make them a user option (*coming soon*:tm:).
+# E(x)-Hentai Tags Preview
+This is an unofficial userscript for e-hentai/exhentai **(WARNING: NSFW)** that displays related tags when you hover over a gallery link while using **Minimal**, **Minimal+** and **Thumbnails** views. These three are currently hardcoded, but I plan to make them a user option (*coming soon*:tm:).
 
 ## Install
 If your browser does not natively support userscripts, install something like [Tampermonkey](https://tampermonkey.net/) or [Violentmonkey](https://violentmonkey.github.io/get-it/), then **[click here to install the script](https://raw.githubusercontent.com/fp555/exh-tags-preview/master/script.user.js)**
@@ -23,3 +22,6 @@ If your browser does not natively support userscripts, install something like [T
 
 ### Is this spyware?
 - I couldn't care less about your sick fetishes: I already have mine, and I can guarantee they're objectively better than yours :sunglasses:. Your questionable browsing history will remain between you and the NSA. Just [check the code yourself](https://github.com/fp555/exh-tags-preview/blob/master/script.user.js): this script is so trivial I didn't even bother including jQuery.
+
+### How do I get past the panda?
+- LURK MOAR NEWFAG

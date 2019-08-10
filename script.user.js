@@ -5,12 +5,21 @@
 // @version     1.4.3
 // @description Adds a preview of gallery tags on hover.
 // @match       *://e-hentai.org/
+// @match       *://e-hentai.org/?f_search=*
 // @match       *://e-hentai.org/?page=*
-// @match       *://e-hentai.org/watched*
+// @match       *://e-hentai.org/watched
 // @match       *://e-hentai.org/popular
 // @match       *://e-hentai.org/favorites.php*
 // @match       *://e-hentai.org/uploader/*
 // @match       *://e-hentai.org/tag/*
+// @match       *://exhentai.org/
+// @match       *://exhentai.org/?f_search=*
+// @match       *://exhentai.org/?page=*
+// @match       *://exhentai.org/watched
+// @match       *://exhentai.org/popular
+// @match       *://exhentai.org/favorites.php*
+// @match       *://exhentai.org/uploader/*
+// @match       *://exhentai.org/tag/*
 // @grant       GM_addStyle
 // @grant       GM_getResourceText
 // @resource    exhcss https://raw.githubusercontent.com/fp555/exh-tags-preview/master/exh.css
@@ -46,6 +55,11 @@
     /* main */
     GM_addStyle(GM_getResourceText("exhcss")).then(function() {
         tooltip.id = "info_div";
+        if(window.location.toString().indexOf("exhentai.org") >= 0) {
+            /* Override CSS vars */
+            document.documentElement.style.setProperty("--eh-bgc", "#4f535b");
+            document.documentElement.style.setProperty("--eh-tbc", "#f1f1f1");
+        }
         if(["m", "p", "t"].includes(document.querySelector("#dms option[selected]").getAttribute("value"))) for(let g of document.querySelectorAll(".glink")) {
             g.addEventListener("mouseenter", mef);
             g.addEventListener("mouseleave", mlf);
