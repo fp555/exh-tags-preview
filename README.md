@@ -5,15 +5,15 @@
 ---
 
 # E(x)-Hentai Tags Preview
-This is an unofficial userscript for e-hentai/exhentai **(WARNING: NSFW)** that displays related tags when you hover over a gallery link while using **Minimal**, **Minimal+** and **Thumbnails** views. These three are currently hardcoded, but I plan to make them a user option (*coming soon*:tm:).
+This is an unofficial userscript for e-hentai/exhentai **(WARNING: NSFW)** that displays related tags when you hover over a gallery link.
 
 ## Install
-If your browser does not natively support userscripts, install something like [Tampermonkey](https://tampermonkey.net/) or [Violentmonkey](https://violentmonkey.github.io/get-it/), then **[click here to install the script](https://raw.githubusercontent.com/fp555/exh-tags-preview/master/script.user.js)**
+If your browser does not natively support userscripts, install something like [Tampermonkey](https://tampermonkey.net/) or [Violentmonkey](https://violentmonkey.github.io/get-it/), then go grab the [latest userscript release](https://github.com/fp555/exh-tags-preview/releases/latest/download/script.user.js)
 
 ## Troubleshooting
 ### I found a bug! / It doesn't work!
 - Stop using weird browsers that don't respect/implement basic web standards;
-  - While it is possible to use this userscript with Internet Explorer, I expect it (including any past or future release) not to work properly. I don't care about IE compatibility, and neither should you.
+  - While it is possible to use userscripts with Internet Explorer, I expect it (including any past or future release) not to work properly. I don't care about IE compatibility, and neither should you.
 - Are you using Greasemonkey v4.0 and above? Try using Tampermonkey or Violentmonkey;
 - [Open an issue](https://github.com/fp555/exh-tags-preview/issues/new) and convince me it's my fault.
 
