@@ -1,14 +1,26 @@
 name: New release from tag
 on:
   push:
-    branches: [master]
-    tags: 'test*'
+    tags: 'v*'
 defaults:
   run:
     shell: bash
 jobs:
+  version_check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Version check
+      id: meta_vc
+      run: echo ::set-output name=count::$(grep -c ${GITHUB_REF#refs/tags/v} script.meta.js)
+    - name: Abort release
+      if: ${{ steps.meta_vc.outputs.count != 2 }}
+      run: |
+        echo "::error file=script.meta.js::Userscript version does not match tag version"
+        exit 1
   new_release:
     runs-on: ubuntu-latest
+    needs: version_check
     steps:
     - uses: actions/checkout@v2
     - name: Build Userscript
@@ -16,23 +28,23 @@ jobs:
       run: |
         echo "Building userscript"
         cat script.meta.js src/script.js > script.user.js
-        echo ::set-output name=TAG::${GITHUB_REF#refs/tags/}
+        echo ::set-output name=tag::${GITHUB_REF#refs/tags/}
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ steps.buildtag.outputs.TAG }}
-        release_name: Release ${{ steps.buildtag.outputs.TAG }}
+        tag_name: ${{ steps.buildtag.outputs.tag }}
+        release_name: Release ${{ steps.buildtag.outputs.tag }}
         draft: true
-        prerelease: true
+        prerelease: false
     - name: Upload Release Asset
       uses: actions/upload-release-asset@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }} 
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./script.user.js
-        asset_name: script_${{ steps.buildtag.outputs.TAG }}.user.js
+        asset_name: script_${{ steps.buildtag.outputs.tag }}.user.js
         asset_content_type: application/javascript
