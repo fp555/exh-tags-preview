@@ -37,7 +37,7 @@ jobs:
       with:
         tag_name: ${{ steps.buildtag.outputs.tag }}
         release_name: Release ${{ steps.buildtag.outputs.tag }}
-        draft: true
+        draft: false
         prerelease: false
     - name: Upload Release Asset
       uses: actions/upload-release-asset@v1
@@ -46,5 +46,5 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./script.user.js
-        asset_name: script_${{ steps.buildtag.outputs.tag }}.user.js
+        asset_name: script.user.js
         asset_content_type: application/javascript
