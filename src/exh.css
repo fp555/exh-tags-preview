@@ -1,18 +1,33 @@
-/* Default values are for e-h. Ex will override them. */
-:root {
-	--eh-bgc: #edebdf;
-	--eh-tbc: #5c0d11;
-}
-
 #info_div {
-	background-color: var(--eh-bgc);
-	border-color: var(--eh-tbc);
 	border-style: solid;
 	border-width: 1px;
 	font-size: 9pt;
 	max-width: 400px;
 	padding: 5px;
 	position: absolute;
-	visibility: hidden; /* "display: none" does not work! */
+	visibility: hidden;
 	z-index: 100;
+}
+
+#info_div.eh {
+    background-color: #edebdf;
+	border-color: #5c0d11;
+}
+
+#info_div.ex {
+    background-color: #4f535b;
+	border-color: #f1f1f1;
+}
+
+.glname {
+    display: flex;
+}
+
+.glname > span:last-child {
+    font-size: 14pt;
+    margin-left: auto;
+    padding-left: 8px;
+    flex: 0 0 23px;
+    align-self: center;
+    cursor: pointer;
 }

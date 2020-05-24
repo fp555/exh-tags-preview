@@ -1,48 +1,40 @@
-(function() {
+((mode, views) => {
     "use strict";
     
-    let tooltip = document.body.appendChild(document.createElement("div"));
-    let mef = function(e) {
-        let xhr = new XMLHttpRequest();
-        xhr.open("GET", e.target.parentElement.getAttribute("href"));
+    const tt = document.body.appendChild(document.createElement("div"));
+    const xhr = new XMLHttpRequest();
+    const mef = (e) => {
+        xhr.open("GET", e.target.closest("td.gl3m,td.gl3c,div.gl1t").querySelector("a").href);
         xhr.responseType = "document";
-        xhr.onload = function() {
-            tooltip.innerHTML = xhr.responseXML.querySelector("div#taglist").innerHTML;
-            /* display tooltip on top or bottom, according to cursor position */
-            tooltip.style.top = `${e.pageY - ((screen.height - e.screenY < tooltip.offsetHeight)? tooltip.offsetHeight : 0)}px`;
-            tooltip.style.left = `${e.pageX + 10}px`;
-            tooltip.style.visibility = "visible";
-            //console.log("pageY:" + e.pageY + " screenheight:" + screen.height + " screenY:" + e.screenY + " offset:" + tooltip.offsetHeight);
+        xhr.onload = () => {
+            tt.innerHTML = xhr.responseXML.querySelector("div#taglist").innerHTML;
+            tt.style.top = `${(window.innerHeight - e.clientY < tt.offsetHeight)? e.pageY - tt.offsetHeight : e.pageY}px`;
+            tt.style.left = `${(window.innerWidth - e.clientX < tt.offsetWidth)? e.pageX - tt.offsetWidth : e.pageX}px`;
+            tt.style.visibility = "visible";
         };
         xhr.send();
     };
-    let mlf = function() {
-        tooltip.style.visibility = "hidden";
-        tooltip.innerHTML = "Loading...";
+    const mlf = () => {
+        tt.style.visibility = "hidden";
+        tt.textContent = "Loading...";
     };
     
-    /* main*/
-    let cssreq = new XMLHttpRequest();
-    cssreq.open("GET", GM_getResourceURL("exhcss"));
-    cssreq.responseType = "text";
-    cssreq.onload = function() {
-        GM_addStyle(cssreq.responseText);
-        tooltip.id = "info_div";
-        if(window.location.toString().indexOf("exhentai.org") >= 0) {
-            /* Override CSS vars */
-            document.documentElement.style.setProperty("--eh-bgc", "#4f535b");
-            document.documentElement.style.setProperty("--eh-tbc", "#f1f1f1");
-        }
-        if(["m", "p", "t"].includes(document.querySelector("#dms option[selected]").getAttribute("value"))) for(let g of document.querySelectorAll(".glink")) {
-            g.addEventListener("mouseenter", mef);
-            g.addEventListener("mouseleave", mlf);
-        }
-    };
-    cssreq.send();
-
-    /* WIP
-        let opt = document.querySelector("#dms > div").appendChild(document.createElement("div"));
-        opt.innerHTML = "&#x1F527;";
-        opt.style.cssText = "position:inherit;display:inline-block;font-size:16px;right:25px;bottom:7px;";
-    */
-})();
+    /*main*/
+    GM_getValue("exhtp.mode", false) || GM_setValue("exhtp.mode", mode);
+    GM_getValue("exhtp.views", false) || GM_setValue("exhtp.views", views);
+    if(views.includes(document.querySelector("#dms option[selected]").value) && ["legacy", "icon"].includes(mode)) {
+        xhr.open("GET", GM_getResourceURL("exhcss"));
+        xhr.responseType = "text";
+        xhr.onload = () => {
+            GM_addStyle(xhr.responseText);
+            tt.id = "info_div";
+            tt.classList.add((window.location.toString().indexOf("exhentai.org") >= 0)? "ex" : "eh");
+            if(mode === "icon") for(let g of document.querySelectorAll(".glname")) g.appendChild(document.createElement("span")).innerHTML = "&#x1F441;&#xFE0F;&#x200D;&#x1F5E8;&#xFE0F;";
+            for(let g of document.querySelectorAll((mode === "icon")? ".glname > span:last-child" : ".glink")) {
+                g.addEventListener("mouseenter", mef);
+                g.addEventListener("mouseleave", mlf);
+            }
+        };
+        xhr.send();
+    }
+})(GM_getValue("exhtp.mode", "legacy"), GM_getValue("exhtp.views", ["m", "p", "l", "t"]));
