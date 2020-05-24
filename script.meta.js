@@ -2,7 +2,7 @@
 // @name        E(x)Hentai Tags Preview
 // @author      fp555
 // @namespace   fp555/exh-tags-preview
-// @version     1.5.1
+// @version     1.5.2
 // @description Adds a tags tooltip while hovering on gallery links.
 // @match       *://e-hentai.org/
 // @match       *://e-hentai.org/?f_search=*

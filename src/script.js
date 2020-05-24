@@ -28,11 +28,7 @@
     cssreq.onload = function() {
         GM_addStyle(cssreq.responseText);
         tooltip.id = "info_div";
-        if(window.location.toString().indexOf("exhentai.org") >= 0) {
-            /* Override CSS vars */
-            document.documentElement.style.setProperty("--eh-bgc", "#4f535b");
-            document.documentElement.style.setProperty("--eh-tbc", "#f1f1f1");
-        }
+        tooltip.classList.add((window.location.toString().indexOf("exhentai.org") >= 0)? "ex" : "eh");
         if(["m", "p", "t"].includes(document.querySelector("#dms option[selected]").getAttribute("value"))) for(let g of document.querySelectorAll(".glink")) {
             g.addEventListener("mouseenter", mef);
             g.addEventListener("mouseleave", mlf);
