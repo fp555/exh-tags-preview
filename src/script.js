@@ -7,7 +7,8 @@
     const curview = document.querySelector("#dms option[selected]").value;
     const options = {
         mode: ["legacy", "icon"],
-        views: "mplt" // "e"xtended is not supported
+        views: "mplt", // "e"xtended is not supported
+        newtab: [true, false]
     };
     const mef = (e) => {
         GM_xmlhttpRequest({
@@ -37,6 +38,16 @@
             return;
         }
     }
+    if(config.newtab) {
+        const sel = ({
+            m: ".gl3m.glname>a",
+            p: ".gl3m.glname>a",
+            l: ".gl3c.glname>a",
+            e: ".gl1e>div>a,.gl2e>div>a",
+            t: ".gl1t>a,.gl4t.glname>div>a,.gl3t>a"
+        })[curview];
+        for(const gl of document.body.querySelectorAll(sel)) gl.setAttribute("target", "_blank");
+    }
     if(config.views.includes(curview)) {
         GM_addStyle(css);
         tt.id = "info_div";
@@ -47,4 +58,4 @@
             g.addEventListener("mouseleave", mlf);
         }
     }
-})({mode: GM_getValue("exhtp.mode", "legacy"), views: GM_getValue("exhtp.views", "mplt")});
+})({mode: GM_getValue("exhtp.mode", "legacy"), views: GM_getValue("exhtp.views", "mplt"), newtab: GM_getValue("exhtp.newtab", true)});

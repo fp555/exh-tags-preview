@@ -18,14 +18,14 @@ Run the script once to let it setup its storage. [Check your release notes](http
   - While I hear it may be possible to run userscripts in Internet Explorer, I expect mine not to work properly. I don't care about IE compatibility, and neither should you!
 - Try using Tampermonkey or Violentmonkey as your userscript manager. Anything else is unsupported and you're on your own;
 - This script uses emojis: [make sure](http://caniemoji.com/) your browser/OS combination can display them properly;
-- On E-Hentai the popup won't show up for some galleries. This is because of the "offensive content" warning that is related to certain specific tags. To fix this you have to click "**Never warn me again**" on the warning page. Of course, as the page says, if you do so you lose ALL rights to be offended/traumatized. Alternatively you can just go for the fjords like a real man;
+- On E-Hentai the popup won't show up for some galleries. This is because of the "offensive content" warning that is related to certain specific tags. To fix this you have to click "**Never warn me again**" on the warning page. Of course, as the page says, if you do so you lose ALL rights to be offended/traumatized. Alternatively you can use Exhentai like all the other cool kids on the Internet :sunglasses:;
 - [Open an issue](https://github.com/fp555/exh-tags-preview/issues/new) and convince me it's my fault.
 
 ### Hey I'd like you to add...
 [Open an issue](https://github.com/fp555/exh-tags-preview/issues/new) and convince me to do it. Even better: [create a pull request](https://help.github.com/articles/creating-a-pull-request/).
 
 ### Privacy policy (is this spyware?)
-I couldn't care less about your disgusting fetishes: I already have mine, and I can guarantee they're objectively better than yours :sunglasses:. Your questionable browsing history shall remain between you and the NSA. Just [check the code yourself](https://github.com/fp555/exh-tags-preview/blob/master/src/script.js): this userscript is so trivial I didn't even bother including jQuery, and since it was originally made for personal use and convenience the possibility of harvesting user data never even crossed my mind.
+I couldn't care less about your disgusting fetishes: I already have mine, and I can guarantee they're objectively better than yours :smirk:. Your questionable browsing history shall remain between you and the NSA. Just [check the code yourself](https://github.com/fp555/exh-tags-preview/blob/master/src/script.js): this userscript is so trivial I didn't even bother including jQuery, and since it was originally made for personal use and convenience the possibility of harvesting user data never even crossed my mind.
 
 ### How do I get past the panda?
 LURK MOAR NEWFAG
