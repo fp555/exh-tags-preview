@@ -2,7 +2,7 @@
     "use strict";
     
     const tt = document.body.appendChild(document.createElement("div"));
-    const css = GM_getResourceText("exhcss");
+    const css = GM_getResourceText("style");
     const fjords = window.location.toString().indexOf("exhentai.org") >= 0;
     const curview = document.querySelector("#dms option[selected]").value;
     const options = {
@@ -12,7 +12,7 @@
     };
     const mef = (e) => {
         GM_xmlhttpRequest({
-            url: e.target.closest("td.gl3m,td.gl3c,div.gl1t").querySelector("a").href,
+            url: e.currentTarget.closest("td.gl3m,td.gl3c,div.gl1t").querySelector("a").href,
             method: "GET",
             responseType: "document",
             anonymous: false,
@@ -50,12 +50,16 @@
     }
     if(config.views.includes(curview)) {
         GM_addStyle(css);
-        tt.id = "info_div";
-        tt.classList.add(fjords? "ex" : "eh");
+        tt.id = "tagstt";
+        tt.classList.add(fjords? "exstyle" : "ehstyle");
         if(config.mode === "icon") for(let g of document.querySelectorAll(".glname")) g.appendChild(document.createElement("span")).innerHTML = "&#x1F441;&#xFE0F;&#x200D;&#x1F5E8;&#xFE0F;";
         for(let g of document.querySelectorAll((config.mode === "icon")? ".glname > span:last-child" : ".glink")) {
             g.addEventListener("mouseenter", mef);
             g.addEventListener("mouseleave", mlf);
         }
     }
-})({mode: GM_getValue("exhtp.mode", "legacy"), views: GM_getValue("exhtp.views", "mplt"), newtab: GM_getValue("exhtp.newtab", true)});
+})(Object.freeze({
+    mode: GM_getValue("exhtp.mode", "legacy"),
+    views: GM_getValue("exhtp.views", "mplt"),
+    newtab: GM_getValue("exhtp.newtab", true)
+}));
