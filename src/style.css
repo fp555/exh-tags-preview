@@ -1,0 +1,84 @@
+fieldset {
+    margin-bottom: 5px;
+    border-color: inherit;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.ehstyle {
+    background-color: #edebdf;
+    border: 1px solid #5c0d11;
+}
+
+.exstyle {
+    background-color: #4f535b;
+	border: 1px solid #f1f1f1;
+}
+
+.glname {
+    display: flex;
+}
+
+.glname > span:last-child {
+    align-self: center;
+    cursor: pointer;
+    flex: 0 0 23px;
+    font-size: 14pt;
+    margin-left: auto;
+    padding-left: 8px;
+    user-select: none;
+}
+
+.ttshow {
+    opacity: 1;
+    visibility: visible;
+}
+
+#tagstt {
+	font-size: 9pt;
+	max-width: 400px;
+	padding: 5px;
+	position: absolute;
+	visibility: hidden;
+	z-index: 100;
+}
+
+#ttoptb {
+	bottom: 0;
+	display: none;
+	font-size: 16pt;
+	opacity: 0.3;
+	padding: 0 5px 5px 0;
+	position: fixed;
+	right: 0;
+	user-select: none;
+	z-index: 101;
+}
+
+#ttoptb:hover {
+    opacity: 1;
+}
+
+#ttoptb > .ttoptpanel {
+    bottom: 42px;
+    font-size: 9pt;
+    padding: 8px;
+    position: absolute;
+    right: 5px;
+    text-align: left;
+    visibility: hidden;
+    width: max-content;
+}
+
+#ttoptb > .ttoptpanel::after {
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    border-top-color: inherit;
+    border-style: solid;
+    border-width: 10px;
+    content: "";
+    position: absolute;
+    right: 5px;
+    top: 100%;
+}

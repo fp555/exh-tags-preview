@@ -14,7 +14,7 @@ jobs:
       id: meta_vc
       run: echo ::set-output name=count::$(grep -c ${GITHUB_REF#refs/tags/v} script.meta.js)
     - name: Abort release
-      if: ${{ steps.meta_vc.outputs.count != 2 }}
+      if: ${{ steps.meta_vc.outputs.count != 3 }}
       run: |
         echo "::error file=script.meta.js::Userscript version does not match tag version"
         exit 1
