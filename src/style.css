@@ -43,8 +43,9 @@ fieldset {
 	z-index: 100;
 }
 
-#ttopt {
+#ttoptb {
 	bottom: 0;
+	display: none;
 	font-size: 16pt;
 	opacity: 0.3;
 	padding: 0 5px 5px 0;
@@ -54,11 +55,11 @@ fieldset {
 	z-index: 101;
 }
 
-#ttopt:hover {
+#ttoptb:hover {
     opacity: 1;
 }
 
-#ttopt .ttoptpanel {
+#ttoptb > .ttoptpanel {
     bottom: 42px;
     font-size: 9pt;
     padding: 8px;
@@ -69,7 +70,7 @@ fieldset {
     width: max-content;
 }
 
-#ttopt .ttoptpanel::after {
+#ttoptb > .ttoptpanel::after {
     border-bottom-color: transparent;
     border-left-color: transparent;
     border-right-color: transparent;
