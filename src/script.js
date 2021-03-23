@@ -13,11 +13,14 @@
         };
         GM_getValue("exhtp." + c, false) || GM_setValue("exhtp." + c, config[c]);
         const cval = Array.isArray(config[c])? config[c] : [config[c]];
-        if(!cval.every((x) => (options[c]).includes(x))) {
-            console.error("Unrecognized option " + x + " for " + c + ". Clearing from storage");
-            GM_deleteValue("exhtp." + c);
-            return;
-        }
+        cval.forEach((x) => {
+            if(options[c].includes(x)) content.querySelector(`input[name=${c}][value=${x}]`).checked = true; // init options panel
+            else {
+                console.error("Unrecognized option " + x + " for " + c + ". Clearing from storage");
+                GM_deleteValue("exhtp." + c);
+                return;
+            }
+        });
     }
     if(config.newtab) { // open galleries in a new tab
         const sel = ({
@@ -36,7 +39,7 @@
         document.body.appendChild(content);
         const tt = document.querySelector("#tagstt");
         const ttopt = document.forms.ttopt;
-        [tt, ttopt].forEach((el) => el.classList.add(window.location.href.indexOf("exhentai.org") >= 0 ? "exstyle" : "ehstyle"));
+        [tt, ttopt].forEach((el) => el.classList.add(window.location.href.indexOf("exhentai.org") >= 0? "exstyle" : "ehstyle"));
         if(config.mode === "icon") document.querySelectorAll(".glname").forEach((i) => i.appendChild(document.createElement("span")).innerHTML = "&#x1F441;&#xFE0F;&#x200D;&#x1F5E8;&#xFE0F;");
         document.querySelectorAll(config.mode === "icon"? ".glname>span:last-child" : ".glink").forEach((g) => {
             g.addEventListener("mouseenter", (e) => {
