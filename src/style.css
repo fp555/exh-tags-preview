@@ -29,25 +29,24 @@ fieldset {
     user-select: none;
 }
 
-.ttshow {
-    opacity: 1;
-    visibility: visible;
-}
-
 #tagstt {
+    --l: initial;
+    --t: initial;
+    --v: hidden;
 	font-size: 9pt;
+	left: var(--l);
 	max-width: 400px;
 	padding: 5px;
 	position: absolute;
-	visibility: hidden;
+	top: var(--t);
+	visibility: var(--v);
 	z-index: 100;
 }
 
-#ttoptb {
+.ttoptb {
 	bottom: 0;
-	display: none;
+	cursor: pointer;
 	font-size: 16pt;
-	opacity: 0.3;
 	padding: 0 5px 5px 0;
 	position: fixed;
 	right: 0;
@@ -55,12 +54,9 @@ fieldset {
 	z-index: 101;
 }
 
-#ttoptb:hover {
-    opacity: 1;
-}
-
-#ttoptb > .ttoptpanel {
+#ttopt {
     bottom: 42px;
+    cursor: auto;
     font-size: 9pt;
     padding: 8px;
     position: absolute;
@@ -70,7 +66,11 @@ fieldset {
     width: max-content;
 }
 
-#ttoptb > .ttoptpanel::after {
+#ttopt:target {
+    visibility: visible;
+}
+
+#ttopt::after {
     border-bottom-color: transparent;
     border-left-color: transparent;
     border-right-color: transparent;
@@ -81,4 +81,11 @@ fieldset {
     position: absolute;
     right: 5px;
     top: 100%;
+}
+
+#ttopt > a {
+    font-size: 12pt;
+    font-weight: bold;
+    margin-left: 95%;
+    text-decoration: none;
 }
