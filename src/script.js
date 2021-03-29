@@ -42,7 +42,7 @@
         [tt, ttopt].forEach((el) => el.classList.add(window.location.href.indexOf("exhentai.org") >= 0? "exstyle" : "ehstyle"));
         if(config.mode === "icon") document.querySelectorAll(".glname").forEach((i) => i.appendChild(document.createElement("span")).innerHTML = "&#x1F441;&#xFE0F;&#x200D;&#x1F5E8;&#xFE0F;");
         document.querySelectorAll(config.mode === "icon"? ".glname>span:last-child" : ".glink").forEach((g) => {
-            g.addEventListener("mouseenter", (e) => {
+            g.onpointerover = (e) => {
                 GM_xmlhttpRequest({
                     url: e.currentTarget.closest("td.gl3m,td.gl3c,div.gl1t").querySelector("a").href,
                     method: "GET",
@@ -55,11 +55,11 @@
                         tt.style.visibility = "visible";
                     }
                 });
-            });
-            g.addEventListener("mouseleave", () => {
+            };
+            g.onpointerout = () => {
                 tt.style.visibility = "hidden";
                 tt.textContent = "Loading...";
-            });
+            };
         });
     }
 })(Object.freeze({
