@@ -26,7 +26,7 @@ jobs:
     - name: Build Userscript
       id: buildtag
       run: |
-        cat script.meta.js LICENSE src/script.js > script.user.js
+        cat script.meta.js src/script.js > script.user.js
         echo ::set-output name=tag::${GITHUB_REF#refs/tags/}
     - name: Create Release
       id: create_release

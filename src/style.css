@@ -29,11 +29,6 @@ fieldset {
     user-select: none;
 }
 
-.ttshow {
-    opacity: 1;
-    visibility: visible;
-}
-
 #tagstt {
 	font-size: 9pt;
 	max-width: 400px;

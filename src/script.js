@@ -4,16 +4,15 @@
     const css = GM_getResourceText("style");
     const content = document.createRange().createContextualFragment(GM_getResourceText("content"));
     const curview = document.querySelector("#dms option[selected]").value;
+    const options = {
+        mode: ["legacy","icon"],
+        views: ["m","p","l","t"], // "e"xtended is not supported
+        newtab: [true,false]
+    };
     
     for(const c in config) { // check for valid storage values
-        const options = {
-            mode: ["legacy","icon"],
-            views: ["m","p","l","t"], // "e"xtended is not supported
-            newtab: [true,false]
-        };
-        GM_getValue("exhtp." + c, false) || GM_setValue("exhtp." + c, config[c]);
-        const cval = Array.isArray(config[c])? config[c] : [config[c]];
-        cval.forEach((x) => {
+        GM_getValue("exhtp." + c, false) || GM_setValue("exhtp." + c, config[c]); // set defaults on 1st run
+        (Array.isArray(config[c])? config[c] : [config[c]]).forEach((x) => {
             if(options[c].includes(x)) content.querySelector(`input[name=${c}][value=${x}]`).checked = true; // init options panel
             else {
                 console.error("Unrecognized option " + x + " for " + c + ". Clearing from storage");
@@ -22,34 +21,41 @@
             }
         });
     }
-    if(config.newtab) { // open galleries in a new tab
-        const sel = ({
-            m: ".gl3m.glname>a",
-            p: ".gl3m.glname>a",
-            l: ".gl3c.glname>a",
-            e: ".gl1e>div>a,.gl2e>div>a",
-            t: ".gl1t>a,.gl4t.glname>div>a,.gl3t>a"
-        })[curview];
-        document.body.querySelectorAll(sel).forEach((gl) => gl.setAttribute("target", "_blank"));
+    content.querySelector("form").onchange = (e) => { // option panel wiring
+        e.stopPropagation(); // change events will all bubble here, no need to add listeners to all checkboxes
+        GM_setValue("exhtp.mode", document.querySelector("input[name=mode]:checked").value);
+        GM_setValue("exhtp.views", [...document.querySelectorAll("input[name=views]:checked")].map((v) => v.value));
+        GM_setValue("exhtp.newtab", document.querySelector("input[name=newtab]").checked);
     }
     
     /* main */
     if(config.views.includes(curview)) {
         GM_addStyle(css);
-        document.body.appendChild(content);
-        const tt = document.querySelector("#tagstt");
-        const ttopt = document.forms.ttopt;
+        const tt = content.querySelector("#tagstt");
+        const ttopt = content.querySelector(".ttoptpanel");
         [tt, ttopt].forEach((el) => el.classList.add(window.location.href.indexOf("exhentai.org") >= 0? "exstyle" : "ehstyle"));
-        if(config.mode === "icon") document.querySelectorAll(".glname").forEach((i) => i.appendChild(document.createElement("span")).innerHTML = "&#x1F441;&#xFE0F;&#x200D;&#x1F5E8;&#xFE0F;");
-        document.querySelectorAll(config.mode === "icon"? ".glname>span:last-child" : ".glink").forEach((g) => {
+        document.body.appendChild(content); // since it is now empty we can reuse this documentfragment
+        content.replaceChildren(...document.querySelectorAll(".itg>*")); // temp moving page elements outside DOM for performance
+        if(config.newtab) {
+            const sel = ({
+                m: ".gl3m.glname>a",
+                p: ".gl3m.glname>a",
+                l: ".gl3c.glname>a",
+                e: ".gl1e>div>a,.gl2e>div>a",
+                t: ".gl1t>a,.gl4t.glname>div>a,.gl3t>a"
+            })[curview];
+            content.querySelectorAll(sel).forEach((gl) => gl.setAttribute("target", "_blank")); // open galleries in a new tab
+        }
+        if(config.mode === "icon") content.querySelectorAll(".glname").forEach((i) => i.appendChild(document.createElement("span")).innerHTML = "&#x1F441;&#xFE0F;&#x200D;&#x1F5E8;&#xFE0F;");
+        content.querySelectorAll(config.mode === "icon"? ".glname>span:last-child" : ".glink").forEach((g) => {
             g.onpointerover = (e) => {
                 GM_xmlhttpRequest({
-                    url: e.currentTarget.closest("td.gl3m,td.gl3c,div.gl1t").querySelector("a").href,
+                    url: e.currentTarget.closest("td.gl3m,td.gl3c,div.gl1t").querySelector("a").href, // closest cannot pick this "a" (not an ancestor of g)
                     method: "GET",
                     responseType: "document",
                     anonymous: false,
                     onload: (xhr) => {
-                        tt.innerHTML = xhr.response.querySelector("div#taglist").innerHTML;
+                        tt.replaceChildren(xhr.response.querySelector("div#taglist>table"));
                         tt.style.top = `${(window.innerHeight - e.clientY < tt.offsetHeight)? e.pageY - tt.offsetHeight : e.pageY}px`;
                         tt.style.left = `${(window.innerWidth - e.clientX < tt.offsetWidth)? e.pageX - tt.offsetWidth : e.pageX}px`;
                         tt.style.visibility = "visible";
@@ -58,11 +64,12 @@
             };
             g.onpointerout = () => {
                 tt.style.visibility = "hidden";
-                tt.textContent = "Loading...";
+                tt.replaceChildren(); // remove everything
             };
         });
+        document.querySelector(".itg").appendChild(content); // restore in one shot all page elements after our modifications
     }
-})(Object.freeze({
+})(Object.freeze({ // the default values
     mode: GM_getValue("exhtp.mode", "legacy"),
     views: GM_getValue("exhtp.views", ["m"]),
     newtab: GM_getValue("exhtp.newtab", true)
