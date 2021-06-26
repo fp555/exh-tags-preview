@@ -32,7 +32,7 @@
     if(config.views.includes(curview)) {
         GM_addStyle(css);
         const tt = content.querySelector("#tagstt");
-        const ttopt = content.querySelector(".ttoptpanel");
+        const ttopt = content.querySelector("#ttopt");
         [tt, ttopt].forEach((el) => el.classList.add(window.location.href.indexOf("exhentai.org") >= 0? "exstyle" : "ehstyle"));
         document.body.appendChild(content); // since it is now empty we can reuse this documentfragment
         content.replaceChildren(...document.querySelectorAll(".itg>*")); // temp moving page elements outside DOM for performance
@@ -50,7 +50,7 @@
         content.querySelectorAll(config.mode === "icon"? ".glname>span:last-child" : ".glink").forEach((g) => {
             g.onpointerover = (e) => {
                 GM_xmlhttpRequest({
-                    url: e.currentTarget.closest("td.gl3m,td.gl3c,div.gl1t").querySelector("a").href, // closest cannot pick this "a" (not an ancestor of g)
+                    url: e.currentTarget.closest("td.gl3m,td.gl3c,div.gl1t").querySelector("a").href, // closest cannot pick this "a" (not an ancestor of e)
                     method: "GET",
                     responseType: "document",
                     anonymous: false,

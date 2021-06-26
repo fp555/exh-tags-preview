@@ -38,23 +38,21 @@ fieldset {
 	z-index: 100;
 }
 
-#ttoptb {
+.ttoptb {
 	bottom: 0;
+	cursor: pointer;
 	font-size: 16pt;
-	opacity: 0.3;
 	padding: 0 5px 5px 0;
 	position: fixed;
 	right: 0;
+	text-decoration: none;
 	user-select: none;
 	z-index: 101;
 }
 
-#ttoptb:hover {
-    opacity: 1;
-}
-
-#ttoptb > .ttoptpanel {
+#ttopt {
     bottom: 42px;
+    cursor: auto;
     font-size: 9pt;
     padding: 8px;
     position: absolute;
@@ -64,7 +62,11 @@ fieldset {
     width: max-content;
 }
 
-#ttoptb > .ttoptpanel::after {
+#ttopt:target {
+    visibility: visible;
+}
+
+#ttopt::after {
     border-bottom-color: transparent;
     border-left-color: transparent;
     border-right-color: transparent;
@@ -75,4 +77,10 @@ fieldset {
     position: absolute;
     right: 5px;
     top: 100%;
+}
+
+#ttopt > a {
+    font-weight: bold;
+    margin-left: 95%;
+    font-size: 12pt;
 }
