@@ -26,7 +26,7 @@
         GM_setValue("exhtp.mode", document.querySelector("input[name=mode]:checked").value);
         GM_setValue("exhtp.views", [...document.querySelectorAll("input[name=views]:checked")].map((v) => v.value));
         GM_setValue("exhtp.newtab", document.querySelector("input[name=newtab]").checked);
-    }
+    };
     
     /* main */
     if(config.views.includes(curview)) {
@@ -50,20 +50,20 @@
         content.querySelectorAll(config.mode === "icon"? ".glname>span:last-child" : ".glink").forEach((g) => {
             g.onpointerover = (e) => {
                 GM_xmlhttpRequest({
-                    url: e.currentTarget.closest("td.gl3m,td.gl3c,div.gl1t").querySelector("a").href, // closest cannot pick this "a" (not an ancestor of e)
+                    url: e.currentTarget.closest("td.gl3m,td.gl3c,div.gl1t").querySelector("a").href, // closest cannot directly pick this "a"
                     method: "GET",
                     responseType: "document",
                     anonymous: false,
                     onload: (xhr) => {
                         tt.replaceChildren(xhr.response.querySelector("div#taglist>table"));
-                        tt.style.top = `${(window.innerHeight - e.clientY < tt.offsetHeight)? e.pageY - tt.offsetHeight : e.pageY}px`;
-                        tt.style.left = `${(window.innerWidth - e.clientX < tt.offsetWidth)? e.pageX - tt.offsetWidth : e.pageX}px`;
-                        tt.style.visibility = "visible";
+                        tt.style.setProperty("--t", `${(window.innerHeight - e.clientY < tt.offsetHeight)? e.pageY - tt.offsetHeight : e.pageY}px`);
+                        tt.style.setProperty("--l", `${(window.innerWidth - e.clientX < tt.offsetWidth)? e.pageX - tt.offsetWidth : e.pageX}px`);
+                        tt.style.setProperty("--v", "visible");
                     }
                 });
             };
             g.onpointerout = () => {
-                tt.style.visibility = "hidden";
+                tt.style.setProperty("--v", "hidden");
                 tt.replaceChildren(); // remove everything
             };
         });

@@ -30,11 +30,16 @@ fieldset {
 }
 
 #tagstt {
+    --l: initial;
+    --t: initial;
+    --v: hidden;
 	font-size: 9pt;
+	left: var(--l);
 	max-width: 400px;
 	padding: 5px;
 	position: absolute;
-	visibility: hidden;
+	top: var(--t);
+	visibility: var(--v);
 	z-index: 100;
 }
 
