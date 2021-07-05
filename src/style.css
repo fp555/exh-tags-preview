@@ -50,7 +50,6 @@ fieldset {
 	padding: 0 5px 5px 0;
 	position: fixed;
 	right: 0;
-	text-decoration: none;
 	user-select: none;
 	z-index: 101;
 }
@@ -85,7 +84,8 @@ fieldset {
 }
 
 #ttopt > a {
+    font-size: 12pt;
     font-weight: bold;
     margin-left: 95%;
-    font-size: 12pt;
+    text-decoration: none;
 }

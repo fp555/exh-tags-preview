@@ -47,25 +47,21 @@
             content.querySelectorAll(sel).forEach((gl) => gl.setAttribute("target", "_blank")); // open galleries in a new tab
         }
         if(config.mode === "icon") content.querySelectorAll(".glname").forEach((i) => i.appendChild(document.createElement("span")).innerHTML = "&#x1F441;&#xFE0F;&#x200D;&#x1F5E8;&#xFE0F;");
-        content.querySelectorAll(config.mode === "icon"? ".glname>span:last-child" : ".glink").forEach((g) => {
-            g.onpointerover = (e) => {
-                GM_xmlhttpRequest({
-                    url: e.currentTarget.closest("td.gl3m,td.gl3c,div.gl1t").querySelector("a").href, // closest cannot directly pick this "a"
-                    method: "GET",
-                    responseType: "document",
-                    anonymous: false,
-                    onload: (xhr) => {
-                        tt.replaceChildren(xhr.response.querySelector("div#taglist>table"));
-                        tt.style.setProperty("--t", `${(window.innerHeight - e.clientY < tt.offsetHeight)? e.pageY - tt.offsetHeight : e.pageY}px`);
-                        tt.style.setProperty("--l", `${(window.innerWidth - e.clientX < tt.offsetWidth)? e.pageX - tt.offsetWidth : e.pageX}px`);
-                        tt.style.setProperty("--v", "visible");
-                    }
-                });
-            };
-            g.onpointerout = () => {
+        content.querySelectorAll(config.mode === "icon"? ".glname>span:last-child" : ".glink").forEach((g) => g.onpointerover = (e) => {
+            const evtprom = new Promise((resolve) => g.onpointerout = (evt) => resolve(evt)); // promise resolved by pointerout event
+            const tagprom = (async () => {
+                const xhr = await window.fetch(e.target.closest("td.gl3m,td.gl3c,div.gl1t").querySelector("a").href);
+                if(!xhr.ok) throw new TypeError("error " + xhr.status);
+                const response = await xhr.text();
+                tt.replaceChildren(document.createRange().createContextualFragment(response).querySelector("div#taglist>table"));
+                tt.style.setProperty("--t", `${(window.innerHeight - e.clientY < tt.offsetHeight)? e.pageY - tt.offsetHeight : e.pageY}px`);
+                tt.style.setProperty("--l", `${(window.innerWidth - e.clientX < tt.offsetWidth)? e.pageX - tt.offsetWidth : e.pageX}px`);
+                tt.style.setProperty("--v", "visible");
+            })(); // async functions always return a promise
+            Promise.all([evtprom, tagprom]).then((_) => { // make sure we have both event and tags before dismissing tooltip
                 tt.style.setProperty("--v", "hidden");
                 tt.replaceChildren(); // remove everything
-            };
+            }).catch((error) => console.error(error.message));
         });
         document.querySelector(".itg").appendChild(content); // restore in one shot all page elements after our modifications
     }
