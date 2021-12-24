@@ -1,49 +1,36 @@
 name: New release from tag
+
 on:
   push:
     tags: 'v*'
+
 defaults:
   run:
     shell: bash
+
 jobs:
-  version_check:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Version check
-      id: meta_vc
-      run: echo ::set-output name=count::$(grep -c ${GITHUB_REF#refs/tags/v} script.meta.js)
-    - name: Abort release
-      if: ${{ steps.meta_vc.outputs.count != 3 }}
-      run: |
-        echo "::error file=script.meta.js::Userscript version does not match tag version"
-        exit 1
   new_release:
     runs-on: ubuntu-latest
-    needs: version_check
     steps:
     - uses: actions/checkout@v2
-    - name: Build Userscript
-      id: buildtag
-      run: |
-        cat script.meta.js src/script.js > script.user.js
-        echo ::set-output name=tag::${GITHUB_REF#refs/tags/}
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: add tag to env.vars
+      run: echo "GITHUB_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+    - name: Version check
+      run: "[[ $(awk '/@version/ {printf \"v%s\",$3}' script.meta.js) = ${{ env.GITHUB_TAG }} ]]"
+
+    - name: Resource version check
+      run: "[[ $(awk '/@resource/ {split($4,F,\"/\"); print F[6]}' script.meta.js | uniq) = ${{ env.GITHUB_TAG }} ]]"
+
+    - name: Build userscript
+      run: cat script.meta.js src/script.js > script.user.js
+
+    - name: Create release draft
+      uses: softprops/action-gh-release@v0.1.14
       with:
-        tag_name: ${{ steps.buildtag.outputs.tag }}
-        release_name: Release ${{ steps.buildtag.outputs.tag }}
+        name: Release ${{ env.GITHUB_TAG }}
         draft: true
-        prerelease: true
-    - name: Upload Release Asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./script.user.js
-        asset_name: script.user.js
-        asset_content_type: application/javascript
+        prerelease: false
+        files: script.user.js
+        fail_on_unmatched_files: true
