@@ -6,27 +6,32 @@ fieldset {
 }
 
 .ehstyle {
-    background-color: #edebdf;
-    border: 1px solid #5c0d11;
+    --bdc: #5c0d11;
+    --bdca: #5c0d1199;
+    --bgc: #edebdf;
+    background-color: var(--bgc);
+    border: 1px solid var(--bdc);
 }
 
 .exstyle {
-    background-color: #4f535b;
-	border: 1px solid #f1f1f1;
+    --bdc: #f1f1f1;
+    --bdca: #f1f1f199;
+    --bgc: #4f535b;
+    background-color: var(--bgc);
+	border: 1px solid var(--bdc);
 }
 
 .glname {
     display: flex;
 }
 
-.glname > span:last-child {
+.glname > svg {
     align-self: center;
     cursor: pointer;
-    flex: 0 0 23px;
-    font-size: 14pt;
+    height: 24px;
     margin-left: auto;
     padding-left: 8px;
-    user-select: none;
+    width: auto;
 }
 
 #tagstt {
@@ -46,11 +51,9 @@ fieldset {
 .ttoptb {
 	bottom: 0;
 	cursor: pointer;
-	font-size: 16pt;
 	padding: 0 5px 5px 0;
 	position: fixed;
 	right: 0;
-	user-select: none;
 	z-index: 101;
 }
 
@@ -88,4 +91,15 @@ fieldset {
     font-weight: bold;
     margin-left: 95%;
     text-decoration: none;
+}
+
+#ttopt label {
+    display: block;
+}
+
+#ttopt > span {
+    color: var(--bdca);
+    display: block;
+    margin-top: 12px;
+    text-align: center;
 }
