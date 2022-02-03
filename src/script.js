@@ -30,15 +30,13 @@
 			
 	// fix exh my uploads
 	if(window.location.href.indexOf("/upld/manage") >= 0) {
-		document.querySelector("td.gtc5>a:first-child").forEach(a => {
-			const gid = a.href.match(/\d{7}/g)[0];
-			const t = a.href.match(/(\w{10})/g)[0];
-			//TBD
-		};
+		document.querySelectorAll("td.gtc5>a:first-child").forEach(a1 => {
+			const stats = document.createRange().createContextualFragment(content.stats);
+			stats.querySelector("a").href += `gid=${a1.href.match(/\d{7}/g)[0]}&t=${a1.href.match(/(\w{10})/g)[0]}`;
+			a1.after(stats);
+		});
 	}
-    
-    /* main */
-    if(rtconfig.views.includes(document.querySelector("#dms option[selected]").value)) {
+    else if(rtconfig.views.includes(document.querySelector("#dms option[selected]").value)) {
         let gsel = ".glink";
         
         // setup tooltip div
@@ -48,8 +46,7 @@
         
         // setup icon
         if(rtconfig.mode === "icon") {
-            const icon = document.createRange().createContextualFragment(content.icon);
-            document.querySelectorAll(".glname").forEach(g => g.appendChild(icon.cloneNode(true)));
+            document.querySelectorAll(".glname").forEach(g => g.appendChild(document.createRange().createContextualFragment(content.icon)));
             gsel = ".glname>svg";
         }
         document.querySelectorAll(gsel).forEach(g => g.onpointerover = e => {
