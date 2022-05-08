@@ -27,7 +27,8 @@
 	case "/upld/manage": // fix exh my uploads
 		document.querySelectorAll("td.gtc5>a:first-child").forEach(a1 => {
 			const stats = document.createRange().createContextualFragment(content.stats);
-			stats.querySelector("a").search = `?gid=${a1.href.match(/\d{7}/g)[0]}&t=${a1.href.match(/(\w{10})/g)[0]}`;
+			const glink = a1.pathname.split('/');
+			stats.querySelector("a").search = `?gid=${glink[2]}&t=${glink[3]}`;
 			a1.after(stats);
 		});
 		break;
