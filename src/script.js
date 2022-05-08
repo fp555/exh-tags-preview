@@ -27,12 +27,13 @@
 	case "/upld/manage": // fix exh my uploads
 		document.querySelectorAll("td.gtc5>a:first-child").forEach(a1 => {
 			const stats = document.createRange().createContextualFragment(content.stats);
-			stats.querySelector("a").href += `gid=${a1.href.match(/\d{7}/g)[0]}&t=${a1.href.match(/(\w{10})/g)[0]}`;
+			stats.querySelector("a").search = `?gid=${a1.href.match(/\d{7}/g)[0]}&t=${a1.href.match(/(\w{10})/g)[0]}`;
 			a1.after(stats);
 		});
 		break;
         
 	case "/upld/managegallery": // fix exh stats link
+		document.querySelector("a[href*='stats.php']").hostname = "e-hentai.org";
 		break;
         
 	default: // setup tooltip div
@@ -47,8 +48,8 @@
 				gsel = ".glname>svg";
 			}
 			document.querySelectorAll(gsel).forEach(g => g.onpointerover = e => {
-				const evtprom = new Promise(resolve => g.onpointerout = evt => resolve(evt));
-				const tagprom = (async () => {
+				const eoutprom = new Promise(resolve => g.onpointerout = eout => resolve(eout));
+				const tagprom = async () => {
 					const xhr = await window.fetch(e.target.closest("td.gl3m,td.gl3c,div.gl1t").querySelector("a").href);
 					if(!xhr.ok) throw new TypeError("error " + xhr.status);
 					const response = await xhr.text();
@@ -56,8 +57,8 @@
 					tt.style.setProperty("--t", `${(window.innerHeight - e.clientY < tt.offsetHeight)? e.pageY - tt.offsetHeight : e.pageY}px`);
 					tt.style.setProperty("--l", `${(window.innerWidth - e.clientX < tt.offsetWidth)? e.pageX - tt.offsetWidth : e.pageX}px`);
 					tt.style.setProperty("--v", "visible");
-				})(); // async functions always return a promise
-				Promise.all([evtprom, tagprom]).then(() => { // make sure we have both event and tags before dismissing tooltip
+				}; // async functions always return a promise
+				Promise.all([eoutprom, tagprom()]).then(() => { // make sure we have both event and tags before dismissing tooltip
 					tt.style.setProperty("--v", "hidden");
 					tt.replaceChildren(); // remove everything
 				}).catch((error) => console.error(error.message));
