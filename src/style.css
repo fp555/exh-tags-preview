@@ -86,7 +86,7 @@ fieldset {
     top: 100%;
 }
 
-#ttopt > a {
+#ttopt > .closebutton {
     font-size: 12pt;
     font-weight: bold;
     margin-left: 95%;
@@ -95,6 +95,10 @@ fieldset {
 
 #ttopt label {
     display: block;
+}
+
+#ttopt input[type="checkbox"] {
+	margin-right: 6px;	
 }
 
 #ttopt > span {
