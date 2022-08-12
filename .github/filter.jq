@@ -1,0 +1,1 @@
+reduce inputs as $line ({}; .[input_filename | split(".")[0] | split("/")[-1]] += [$line]) | map_values(join(""))
