@@ -14,23 +14,28 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: add tag to env.vars
-      run: echo "GITHUB_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
-
     - name: Version check
-      run: "[[ $(awk '/@version/ {printf \"v%s\",$3}' script.meta.js) = ${{ env.GITHUB_TAG }} ]]"
+      run: "[[ $(awk '/@version/ {printf \"v%s\",$3}' script.meta.js) = ${{ github.ref_name }} ]]"
 
     - name: Resource version check
-      run: "[[ $(awk '/@resource/ {split($4,F,\"/\"); print F[6]}' script.meta.js | uniq) = ${{ env.GITHUB_TAG }} ]]"
+      run: "[[ $(awk '/@resource/ {split($4,F,\"/\"); print F[8]}' script.meta.js) = ${{ github.ref_name }} ]]"
 
     - name: Build userscript
       run: cat script.meta.js src/script.js > script.user.js
+      
+    - name: Build JSON bundle
+      run: |
+        shopt -s extglob
+        jq -Rn -f .github/filter.jq src/!(script.js) > content.json
 
     - name: Create release draft
       uses: softprops/action-gh-release@v0.1.14
       with:
-        name: Release ${{ env.GITHUB_TAG }}
+        name: Release ${{ github.ref_name }}
         draft: true
         prerelease: false
-        files: script.user.js
         fail_on_unmatched_files: true
+        files: |
+          script.user.js
+          content.json
+        

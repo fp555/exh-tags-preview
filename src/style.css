@@ -4,7 +4,6 @@ fieldset {
     border-style: solid;
     border-width: 1px;
 }
-
 .ehstyle {
     --bdc: #5c0d11;
     --bdca: #5c0d1199;
@@ -12,7 +11,6 @@ fieldset {
     background-color: var(--bgc);
     border: 1px solid var(--bdc);
 }
-
 .exstyle {
     --bdc: #f1f1f1;
     --bdca: #f1f1f199;
@@ -20,11 +18,9 @@ fieldset {
     background-color: var(--bgc);
 	border: 1px solid var(--bdc);
 }
-
 .glname {
     display: flex;
 }
-
 .glname > svg {
     align-self: center;
     cursor: pointer;
@@ -33,7 +29,6 @@ fieldset {
     padding-left: 8px;
     width: auto;
 }
-
 #tagstt {
     --l: initial;
     --t: initial;
@@ -47,7 +42,6 @@ fieldset {
 	visibility: var(--v);
 	z-index: 100;
 }
-
 .ttoptb {
 	bottom: 0;
 	cursor: pointer;
@@ -56,7 +50,6 @@ fieldset {
 	right: 0;
 	z-index: 101;
 }
-
 #ttopt {
     bottom: 42px;
     cursor: auto;
@@ -68,11 +61,9 @@ fieldset {
     visibility: hidden;
     width: max-content;
 }
-
 #ttopt:target {
     visibility: visible;
 }
-
 #ttopt::after {
     border-bottom-color: transparent;
     border-left-color: transparent;
@@ -85,18 +76,18 @@ fieldset {
     right: 5px;
     top: 100%;
 }
-
-#ttopt > a {
+#ttopt > .closebutton {
     font-size: 12pt;
     font-weight: bold;
     margin-left: 95%;
     text-decoration: none;
 }
-
 #ttopt label {
     display: block;
 }
-
+#ttopt input[type="checkbox"] {
+	margin-right: 6px;
+}
 #ttopt > span {
     color: var(--bdca);
     display: block;
