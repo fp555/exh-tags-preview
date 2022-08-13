@@ -1,18 +1,18 @@
-((rtconfig) => {
+((args) => {
     "use strict";
     
      // save defaults on 1st run
-    for(const c in rtconfig) GM_getValue("exhtp." + c, false) || GM_setValue("exhtp." + c, rtconfig[c]);
+    for(const c in args) GM_getValue("exhtp." + c, false) || GM_setValue("exhtp." + c, args[c]);
     
-    // setup resources
-    GM_addStyle(GM_getResourceText("style"));
+    // setup resources and CSS
     const content = JSON.parse(GM_getResourceText("content"));
+    GM_addStyle(content.style);
 	
     // options panel setup
     const op = document.createRange().createContextualFragment(content.options);
-    op.querySelector(`input[name=mode][value=${rtconfig.mode}]`).checked = true;
-    rtconfig.views.split('').forEach(v => op.querySelector(`input[name=views][value=${v}]`).checked = true);
-    op.querySelector("input[name=newtab]").checked = rtconfig.newtab;
+    op.querySelector(`input[name=mode][value=${args.mode}]`).checked = true;
+    args.views.split('').forEach(v => op.querySelector(`input[name=views][value=${v}]`).checked = true);
+    op.querySelector("input[name=newtab]").checked = args.newtab;
     const ttopt = op.querySelector("#ttopt");
     ttopt.onchange = e => {
         e.stopPropagation(); // change events will all bubble here, no need to add listeners to all checkboxes
@@ -38,13 +38,13 @@
 		break;
         
 	default: // setup tooltip div
-		if(rtconfig.views.includes(document.querySelector("#dms option[selected]").value)) {
+		if(args.views.includes(document.querySelector("#dms option[selected]").value)) {
 			let gsel = ".glink";
 			document.body.appendChild(document.createRange().createContextualFragment(content.tooltip));
 			const tt = document.querySelector("#tagstt");
 			tt.classList.add(window.location.hostname === "exhentai.org"? "exstyle" : "ehstyle");
 
-			if(rtconfig.mode === "icon") { // setup icon
+			if(args.mode === "icon") { // setup icon
 				document.querySelectorAll(".glname").forEach(g => g.appendChild(document.createRange().createContextualFragment(content.icon)));
 				gsel = ".glname>svg";
 			}
@@ -67,7 +67,7 @@
 		};
 	
 		// open galleries in a new tab
-		if(rtconfig.newtab) document.querySelectorAll(".gl3m.glname>a,.gl3c.glname>a,.gl1e>div>a,.gl2e>div>a,.gl1t>a,.gl4t.glname>div>a,.gl3t>a").forEach(a => a.setAttribute("target", "_blank"));
+		if(args.newtab) document.querySelectorAll(".gl3m.glname>a,.gl3c.glname>a,.gl1e>div>a,.gl2e>div>a,.gl1t>a,.gl4t.glname>div>a,.gl3t>a").forEach(a => a.setAttribute("target", "_blank"));
 		break;
     };
 })({ // the default values
