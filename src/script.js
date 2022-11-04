@@ -38,7 +38,7 @@
 		break;
         
 	default: // setup tooltip div
-		if(args.views.includes(document.querySelector(".searchnav select").value)) {
+		if(args.views.includes(document.querySelector(".searchnav > div:last-child > select").value)) {
 			let gsel = ".glink";
 			document.body.appendChild(document.createRange().createContextualFragment(content.tooltip));
 			const tt = document.querySelector("#tagstt");

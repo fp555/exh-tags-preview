@@ -94,3 +94,8 @@ fieldset {
     margin-top: 12px;
     text-align: center;
 }
+
+/* fix for selects slightly too small */
+.searchnav select {
+	width: fit-content;
+}
