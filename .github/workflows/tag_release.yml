@@ -12,30 +12,16 @@ jobs:
   new_release:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-
-    - name: Version check
-      run: "[[ $(awk '/@version/ {printf \"v%s\",$3}' script.meta.js) = ${{ github.ref_name }} ]]"
-
-    - name: Resource version check
-      run: "[[ $(awk '/@resource/ {split($4,F,\"/\"); print F[8]}' script.meta.js) = ${{ github.ref_name }} ]]"
+    - uses: actions/checkout@v4
 
     - name: Build userscript
-      run: cat script.meta.js src/script.js > script.user.js
-      
-    - name: Build JSON bundle
-      run: |
-        shopt -s extglob
-        jq -Rn -f .github/filter.jq src/!(script.js) > content.json
+      run: .github/build.sh
 
     - name: Create release draft
-      uses: softprops/action-gh-release@v0.1.14
+      uses: ncipollo/release-action@v1
       with:
         name: Release ${{ github.ref_name }}
         draft: true
         prerelease: false
-        fail_on_unmatched_files: true
-        files: |
-          script.user.js
-          content.json
-        
+        artifacts: "script.user.js,content.json"
+        artifactErrorsFailBuild: true        
