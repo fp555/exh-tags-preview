@@ -13,13 +13,11 @@
 
     // options panel setup
     const op = document.createRange().createContextualFragment(content.options);
-    op.querySelector(`input[name=mode][value=${args.mode}]`).checked = true;
     args.views.split('').forEach(v => op.querySelector(`input[name=views][value=${v}]`).checked = true);
     op.querySelector("input[name=newtab]").checked = args.newtab;
     const ttopt = op.querySelector("#ttopt");
     ttopt.onchange = function(e) {
         e.stopPropagation(); // change events will all bubble here, no need to add listeners to all checkboxes
-        GM_setValue("exhtp.mode", document.querySelector("input[name=mode]:checked").value);
         GM_setValue("exhtp.views", [...document.querySelectorAll("input[name=views]:checked")].map(v => v.value).join(''));
         GM_setValue("exhtp.newtab", document.querySelector("input[name=newtab]").checked);
     };
@@ -41,18 +39,15 @@
 		document.querySelector("a[href*='stats.php']").hostname = "e-hentai.org";
 		break;
 
-	default: // setup tooltip
+	default:
 		if(args.views.includes(document.querySelector(".searchnav > div:last-child > select").value)) {
-			let gsel = ".glink";
+			// setup tooltip
 			document.body.appendChild(document.createRange().createContextualFragment(content.tooltip));
 			const tt = document.querySelector("#tagstt");
 			tt.classList.add(exh? "exstyle" : "ehstyle");
 			// setup icon
-			if(args.mode === "icon") {
-				document.querySelectorAll(".gl3m.glname,.gl3c.glname,.gl6t").forEach(g => g.appendChild(document.createRange().createContextualFragment(content.icon)));
-				gsel = ".svgicon";
-			}
-			document.querySelectorAll(gsel).forEach(g => g.onpointerover = e => {
+			document.querySelectorAll(".gl3m.glname,.gl3c.glname,.gl6t").forEach(g => g.appendChild(document.createRange().createContextualFragment(content.icon)));
+			document.querySelectorAll(".svgicon").forEach(g => g.onpointerover = e => {
 				const eoutprom = new Promise(resolve => g.onpointerout = eout => resolve(eout));
 				const tagprom = async () => {
 					// fetch gallery tags
@@ -98,7 +93,6 @@
 		break;
     };
 })({ // the default values
-    mode: GM_getValue("exhtp.mode", "legacy"),
     views: GM_getValue("exhtp.views", "m"),
     newtab: GM_getValue("exhtp.newtab", true)
 });
