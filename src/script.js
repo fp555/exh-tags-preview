@@ -22,7 +22,7 @@
         GM_setValue("exhtp.newtab", document.querySelector("input[name=newtab]").checked);
     };
     ttopt.classList.add(exh? "exstyle" : "ehstyle");
-    document.body.appendChild(op);
+    document.querySelector(".searchnav > div:last-child").prepend(op);
 	
 	// main
     switch(window.location.pathname) {

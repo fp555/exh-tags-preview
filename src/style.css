@@ -14,7 +14,7 @@
 	border: 1px solid var(--bdc);
 }
 
-/* icon and tooltip positioning rules */
+/* tags icon positioning */
 .glname {
     display: flex;
 	justify-content: space-between;
@@ -36,6 +36,8 @@
 	height: 16px;
 	min-width: 16px;
 }
+
+/* tooltip positioning */
 #tagstt {
     --l: initial;
     --t: initial;
@@ -51,54 +53,50 @@
 }
 
 /* option button and panel */
+.searchnav > div:last-child {
+	align-items: center;
+	column-gap: 5px;
+	display: flex;
+	justify-content: flex-end;
+}
 .ttoptb {
-	bottom: 0;
 	cursor: pointer;
-	padding: 0 5px 5px 0;
-	position: fixed;
-	right: 0;
-	z-index: 101;
+	height: 16px;
+	position: relative;
+	width: 16px;
 }
 #ttopt {
-    bottom: 42px;
     cursor: auto;
     font-size: 9pt;
     padding: 8px;
     position: absolute;
-    right: 5px;
+    right: 28px;
     text-align: left;
+	top: -5px;
     visibility: hidden;
     width: max-content;
+	z-index: 1;
 }
-#ttopt:target {
-    visibility: visible;
+.ttoptb:hover > #ttopt {
+	visibility: visible;
 }
 #ttopt::after {
     border-bottom-color: transparent;
-    border-left-color: transparent;
+    border-left-color: inherit;
     border-right-color: transparent;
-    border-top-color: inherit;
+    border-top-color: transparent;
     border-style: solid;
     border-width: 10px;
     content: "";
+	left: 100%;
     position: absolute;
-    right: 5px;
-    top: 100%;
-}
-#ttopt > .closebutton {
-    font-size: 12pt;
-    font-weight: bold;
-    margin-left: 95%;
-    text-decoration: none;
+    top: 3px;
 }
 #ttopt fieldset {
     margin-bottom: 5px;
     border-color: inherit;
     border-style: solid;
     border-width: 1px;
-}
-#ttopt label {
-    display: block;
 }
 #ttopt input[type="checkbox"] {
 	margin-right: 6px;
