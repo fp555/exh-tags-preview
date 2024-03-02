@@ -15,7 +15,12 @@ jobs:
     - uses: actions/checkout@v4
     
     - name: Branch name
-      run: echo "GIT_BRANCH_NAME=$(git branch --show-current)" >> "$GITHUB_ENV"
+      id: gitbranch
+      run: |
+        echo "::group::Branch check"
+        echo "Working on branch $(git branch --show-current)"
+        echo "name=$(git branch --show-current)" >> $GITHUB_OUTPUT
+        echo "::endgroup::"
 
     - name: Version check
       run: |
@@ -47,6 +52,6 @@ jobs:
       with:
         name: Release ${{ github.ref_name }}
         draft: true
-        prerelease: ${{ env.GIT_BRANCH_NAME == 'dev' }}
+        prerelease: ${{ steps.gitbranch.outputs.name == 'dev' }}
         artifacts: "script.user.js,content.json"
         artifactErrorsFailBuild: true        
