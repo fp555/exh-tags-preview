@@ -1,57 +1,76 @@
 /* themes for e-h/exh */
 .ehstyle {
-    --bdc: #5c0d11;
     --bdca: #5c0d1199;
-    --bgc: #edebdf;
-    background-color: var(--bgc);
-    border: 1px solid var(--bdc);
+    background-color: #edebdf;
+    border: 1px solid #5c0d11;
 }
 .exstyle {
-    --bdc: #f1f1f1;
     --bdca: #f1f1f199;
-    --bgc: #4f535b;
-    background-color: var(--bgc);
-	border: 1px solid var(--bdc);
+    background-color: #4f535b;
+	border: 1px solid #f1f1f1;
 }
 
-/* tags icon positioning */
+/* tags icon */
 .glname {
     display: flex;
 	justify-content: space-between;
 }
-.svgicon {
-    align-self: center;
+.tticon {
+	align-self: center;
     cursor: pointer;
-    padding-left: 8px;
-}
-.gl3m > .svgicon {
-	height: 20px;
-	min-width: 20px;
-}
-.gl3c > .svgicon {
-	height: 24px;
-	min-width: 24px;
-}
-.gl6t > .svgicon {
 	height: 16px;
-	min-width: 16px;
+    padding-left: 8px;
+	position: relative;
+	width: 16px;
+}
+.gl3m > .tticon {
+	height: 20px;
+	width: 20px;
+}
+.gl3c > .tticon {
+	height: 24px;
+	width: 24px;
+}
+.tticon > svg {
+	color: inherit;
+	height: 100%;
+	width: 100%;
+}
+.tticon > .icon-eye-slash {
+	display: inline;
+}
+.tticon[data-tags] > .icon-eye-slash {
+	display: none;
+}
+.tticon > .icon-tags {
+	display: none;
+}
+.tticon[data-tags] > .icon-tags {
+	display: inline;
 }
 
-/* tooltip positioning */
-#tagstt {
-    --l: initial;
-    --t: initial;
-    --v: hidden;
+/* tags tooltip */
+.tagstt {
+	--b: auto;
+	--l: auto;
+	--r: auto;
+	--t: auto;
+	bottom: var(--b);
+	cursor: auto;
 	font-size: 9pt;
 	left: var(--l);
 	max-width: 400px;
 	padding: 5px;
 	position: absolute;
+	right: var(--r);
 	top: var(--t);
-	visibility: var(--v);
-	z-index: 100;
+	visibility: hidden;
+	z-index: 1;
 }
-
+.tticon[data-tags]:hover > .tagstt {
+	visibility: visible;
+}
+	
 /* option button and panel */
 .searchnav > div:last-child {
 	align-items: center;
@@ -70,12 +89,12 @@
     font-size: 9pt;
     padding: 8px;
     position: absolute;
-    right: 28px;
+    right: 26px;
     text-align: left;
-	top: -5px;
+	top: -3px;
     visibility: hidden;
     width: max-content;
-	z-index: 1;
+	z-index: 2;
 }
 .ttoptb:hover > #ttopt {
 	visibility: visible;

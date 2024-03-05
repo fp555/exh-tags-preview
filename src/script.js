@@ -24,14 +24,48 @@
     ttopt.classList.add(exh? "exstyle" : "ehstyle");
     document.querySelector(".searchnav > div:last-child").prepend(op);
 	
+	// fetch tags from E-H API
+	function getTags(gl) {
+		fetch("https://api.e-hentai.org/api.php", {
+			method: "POST",
+			headers: {"Content-Type": "application/json;charset=utf-8"},
+			body: JSON.stringify({
+				method: "gdata",
+				namespace: 1,
+				gidlist: gl
+			})
+		}).then(result => {
+			if(!result.ok) throw new Error("fetch: error " + xhr.status);
+			return result.json();
+		}).then(response => {
+			const tagsmap = new Map();
+			const tt = document.createDocumentFragment();
+			response.gmetadata[0].tags.map(t => t.match(/(.+):(.+)/).slice(1)).forEach(([k, v]) => tagsmap.set(k, tagsmap.has(k)? [...tagsmap.get(k), v] : [v]));
+			// create tags table
+			[...tagsmap.keys()].forEach(k => {
+				const tds = [document.createElement("td"), document.createElement("td")];
+				tds[0].classList.add("tc");
+				tds[0].append(`${k}:`);
+				tagsmap.get(k).forEach(v => {
+					const vdiv = document.createElement("div");
+					vdiv.classList.add("gt");
+					vdiv.append(`${v}`);
+					tds[1].append(vdiv);
+				});
+				tt.appendChild(document.createElement("tr")).append(...tds);
+			});
+			return tt;
+		});
+	}
+	
 	// main
     switch(window.location.pathname) {
 	case "/upld/manage": // fix exh my uploads
-		document.querySelectorAll("td.gtc5>a:first-child").forEach(a1 => {
+		document.querySelectorAll("td.gtc5>a:first-child").forEach(a => {
 			const stats = document.createRange().createContextualFragment(content.stats);
-			const glink = a1.pathname.split('/');
+			const glink = a.pathname.split('/');
 			stats.querySelector("a").search = `?gid=${glink[2]}&t=${glink[3]}`;
-			a1.after(stats);
+			a.after(stats);
 		});
 		break;
 
@@ -40,54 +74,33 @@
 		break;
 
 	default:
-		if(args.views.includes(document.querySelector(".searchnav > div:last-child > select").value)) {
-			// setup tooltip
-			document.body.appendChild(document.createRange().createContextualFragment(content.tooltip));
-			const tt = document.querySelector("#tagstt");
-			tt.classList.add(exh? "exstyle" : "ehstyle");
-			// setup icon
-			document.querySelectorAll(".gl3m.glname,.gl3c.glname,.gl6t").forEach(g => g.appendChild(document.createRange().createContextualFragment(content.icon)));
-			document.querySelectorAll(".svgicon").forEach(g => g.onpointerover = e => {
-				const eoutprom = new Promise(resolve => g.onpointerout = eout => resolve(eout));
-				const tagprom = async () => {
-					// fetch gallery tags
-					const xhr = await fetch("https://api.e-hentai.org/api.php", {
-						method: "POST",
-						headers: {"Content-Type": "application/json;charset=utf-8"},
-						body: JSON.stringify({
-							method: "gdata",
-							namespace: 1,
-							gidlist: [e.target.closest("td.gl3m,td.gl3c,div.gl1t").querySelector("a").href.match(/(\d+)\/(\w+)\/$/).splice(1)]
-						})
-					});
-					if(!xhr.ok) throw new TypeError("error " + xhr.status);
-					xhr.json().then(response => {
-						const tagsmap = new Map();
-						response.gmetadata[0].tags.map(t => t.match(/(.+):(.+)/).slice(1)).forEach(([k, v]) => tagsmap.set(k, tagsmap.has(k)? [...tagsmap.get(k), v] : [v]));
-						// create tags table
-						[...tagsmap.keys()].forEach(k => {
-							const tds = [document.createElement("td"), document.createElement("td")];
-							tds[0].classList.add("tc");
-							tds[0].append(`${k}:`);
-							tagsmap.get(k).forEach(v => {
-								const vdiv = document.createElement("div");
-								vdiv.classList.add("gt");
-								vdiv.append(`${v}`);
-								tds[1].append(vdiv);
-							});
-							tt.querySelector("tbody").appendChild(document.createElement("tr")).append(...tds);
-						});
-						tt.style.setProperty("--t", `${(window.innerHeight - e.clientY < tt.offsetHeight)? e.pageY - tt.offsetHeight : e.pageY}px`);
-						tt.style.setProperty("--l", `${(window.innerWidth - e.clientX < tt.offsetWidth)? e.pageX - tt.offsetWidth : e.pageX}px`);
-						tt.style.setProperty("--v", "visible");
-					});
-				}; // async functions always return a promise
-				Promise.all([eoutprom, tagprom()]).then(() => { // make sure we have both event and tags before dismissing tooltip
-					tt.style.setProperty("--v", "hidden");
-					tt.querySelector("tbody").replaceChildren(); // remove everything
-				}).catch((error) => console.error(error.message));
+		if(args.views.includes(document.querySelector(".searchnav select").value)) {
+			// setup icon & tooltip
+			document.querySelectorAll(".gl3m.glname,.gl3c.glname,.gl6t").forEach(g => g.append(document.createRange().createContextualFragment(content.tooltip)));
+			document.querySelectorAll(".tticon > .tagstt").forEach(t => t.classList.add(exh? "exstyle" : "ehstyle"));
+			document.querySelectorAll(".tticon").forEach(i => i.onclick = (ev) => {
+				ev.stopPropagation();
+				// only fire on single click events when no tags
+				if(ev.detail === 1 && !ev.target.hasAttribute("data-tags")) i.querySelector("tbody").replaceChildren(getTags([i.parentElement.querySelector("a").href.match(/(\d+)\/(\w+)\/$/).splice(1)]));
+				// adjust tooltip positioning
+				const tt = i.querySelector(".tagstt");
+				if(window.innerHeight - ev.clientY < tt.offsetHeight) {
+					tt.style.setProperty("--b", "-3px"); //up
+					tt.style.setProperty("--t", "auto");
+				} else {
+					tt.style.setProperty("--b", "auto");
+					tt.style.setProperty("--t", "-3px"); //down
+				}
+				if(window.innerWidth - ev.clientX < tt.offsetWidth) {
+					tt.style.setProperty("--l", "auto");
+					tt.style.setProperty("--r", "10px"); //left
+				} else {
+					tt.style.setProperty("--l", "10px"); //right
+					tt.style.setProperty("--r", "auto");
+				}
+				i.toggleAttribute("data-tags", true);
 			});
-		};
+		}
 		// open galleries in a new tab
 		if(args.newtab) document.querySelectorAll(".gl3m.glname>a,.gl3c.glname>a,.gl1e>div>a,.gl2e>div>a,.gl1t>a,.gl4t.glname>div>a,.gl3t>a").forEach(a => a.setAttribute("target", "_blank"));
 		break;
