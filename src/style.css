@@ -18,18 +18,11 @@
 .tticon {
 	align-self: center;
     cursor: pointer;
+	flex: 0 0 auto;
 	height: 16px;
-    padding-left: 8px;
+    margin-left: 8px;
 	position: relative;
 	width: 16px;
-}
-.gl3m > .tticon {
-	height: 20px;
-	width: 20px;
-}
-.gl3c > .tticon {
-	height: 24px;
-	width: 24px;
 }
 .tticon > svg {
 	color: inherit;
@@ -39,10 +32,10 @@
 .tticon > .icon-eye-slash {
 	display: inline;
 }
-.tticon[data-tags] > .icon-eye-slash {
+.tticon > .icon-tags {
 	display: none;
 }
-.tticon > .icon-tags {
+.tticon[data-tags] > .icon-eye-slash {
 	display: none;
 }
 .tticon[data-tags] > .icon-tags {
@@ -51,19 +44,15 @@
 
 /* tags tooltip */
 .tagstt {
-	--b: auto;
-	--l: auto;
-	--r: auto;
-	--t: auto;
-	bottom: var(--b);
+	bottom: auto;
 	cursor: auto;
 	font-size: 9pt;
-	left: var(--l);
-	max-width: 400px;
+	left: auto;
+	max-width: 40vw;
 	padding: 5px;
 	position: absolute;
-	right: var(--r);
-	top: var(--t);
+	right: auto;
+	top: auto;
 	visibility: hidden;
 	z-index: 1;
 }
