@@ -24,40 +24,6 @@
     ttopt.classList.add(exh? "exstyle" : "ehstyle");
     document.querySelector(".searchnav > div:last-child").prepend(op);
 	
-	// fetch tags from E-H API
-	function getTags(gl) {
-		fetch("https://api.e-hentai.org/api.php", {
-			method: "POST",
-			headers: {"Content-Type": "application/json;charset=utf-8"},
-			body: JSON.stringify({
-				method: "gdata",
-				namespace: 1,
-				gidlist: gl
-			})
-		}).then(result => {
-			if(!result.ok) throw new Error("fetch: error " + xhr.status);
-			return result.json();
-		}).then(response => {
-			const tagsmap = new Map();
-			const tt = document.createDocumentFragment();
-			response.gmetadata[0].tags.map(t => t.match(/(.+):(.+)/).slice(1)).forEach(([k, v]) => tagsmap.set(k, tagsmap.has(k)? [...tagsmap.get(k), v] : [v]));
-			// create tags table
-			[...tagsmap.keys()].forEach(k => {
-				const tds = [document.createElement("td"), document.createElement("td")];
-				tds[0].classList.add("tc");
-				tds[0].append(`${k}:`);
-				tagsmap.get(k).forEach(v => {
-					const vdiv = document.createElement("div");
-					vdiv.classList.add("gt");
-					vdiv.append(`${v}`);
-					tds[1].append(vdiv);
-				});
-				tt.appendChild(document.createElement("tr")).append(...tds);
-			});
-			return tt;
-		});
-	}
-	
 	// main
     switch(window.location.pathname) {
 	case "/upld/manage": // fix exh my uploads
@@ -80,25 +46,66 @@
 			document.querySelectorAll(".tticon > .tagstt").forEach(t => t.classList.add(exh? "exstyle" : "ehstyle"));
 			document.querySelectorAll(".tticon").forEach(i => i.onclick = (ev) => {
 				ev.stopPropagation();
-				// only fire on single click events when no tags
-				if(ev.detail === 1 && !ev.target.hasAttribute("data-tags")) i.querySelector("tbody").replaceChildren(getTags([i.parentElement.querySelector("a").href.match(/(\d+)\/(\w+)\/$/).splice(1)]));
-				// adjust tooltip positioning
-				const tt = i.querySelector(".tagstt");
-				if(window.innerHeight - ev.clientY < tt.offsetHeight) {
-					tt.style.setProperty("--b", "-3px"); //up
-					tt.style.setProperty("--t", "auto");
-				} else {
-					tt.style.setProperty("--b", "auto");
-					tt.style.setProperty("--t", "-3px"); //down
+				// only fire on single click events
+				if(ev.detail === 1) {
+					const getTags = new Promise(resolve => {
+						// if we already inserted tags, stop
+						if(i.hasAttribute("data-tags")) resolve(false);
+						else {
+							// fetch tags from E-H API
+							fetch("https://api.e-hentai.org/api.php", {
+								method: "POST",
+								headers: {"Content-Type": "application/json;charset=utf-8"},
+								body: JSON.stringify({
+									method: "gdata",
+									namespace: 1,
+									gidlist: [i.parentElement.querySelector("a").href.match(/(\d+)\/(\w+)\/$/).splice(1)]
+								})
+							}).then(result => {
+								if(!result.ok) throw new Error("fetch: error " + xhr.status);
+								return result.json();
+							}).then(response => {
+								const tagsmap = new Map();
+								const tt = document.createDocumentFragment();
+								response.gmetadata[0].tags.map(t => t.match(/(.+):(.+)/).slice(1)).forEach(([k, v]) => tagsmap.set(k, tagsmap.has(k)? [...tagsmap.get(k), v] : [v]));
+								// create tags table
+								[...tagsmap.keys()].forEach(k => {
+									const tds = [document.createElement("td"), document.createElement("td")];
+									tds[0].classList.add("tc");
+									tds[0].append(`${k}:`);
+									tagsmap.get(k).forEach(v => {
+										const va = document.createElement("a");
+										va.classList.add("atag");
+										va.append(`${v}`);
+										tds[1].append(va);
+									});
+									tt.appendChild(document.createElement("tr")).append(...tds);
+								});
+								resolve(tt);
+							});
+						}
+					});
+					getTags.then(ttags => {
+						if(ttags) i.querySelector("tbody").replaceChildren(ttags);
+						// adjust tooltip positioning
+						const tt = i.querySelector(".tagstt");
+						if(window.innerHeight - ev.clientY < tt.offsetHeight) {
+							tt.style.setProperty("--b", "-3px"); //up
+							tt.style.setProperty("--t", "auto");
+						} else {
+							tt.style.setProperty("--b", "auto");
+							tt.style.setProperty("--t", "-3px"); //down
+						}
+						if(window.innerWidth - ev.clientX < tt.offsetWidth) {
+							tt.style.setProperty("--l", "auto");
+							tt.style.setProperty("--r", "10px"); //left
+						} else {
+							tt.style.setProperty("--l", "10px"); //right
+							tt.style.setProperty("--r", "auto");
+						}
+						i.toggleAttribute("data-tags", true);
+					});
 				}
-				if(window.innerWidth - ev.clientX < tt.offsetWidth) {
-					tt.style.setProperty("--l", "auto");
-					tt.style.setProperty("--r", "10px"); //left
-				} else {
-					tt.style.setProperty("--l", "10px"); //right
-					tt.style.setProperty("--r", "auto");
-				}
-				i.toggleAttribute("data-tags", true);
 			});
 		}
 		// open galleries in a new tab
