@@ -10,7 +10,6 @@
 // @match       https://e-hentai.org/watched*
 // @match       https://e-hentai.org/popular
 // @match       https://e-hentai.org/favorites.php*
-// @match       https://e-hentai.org/uploader/*
 // @match       https://e-hentai.org/tag/*
 // @match       https://exhentai.org/
 // @match       https://exhentai.org/?f_search=*
@@ -18,7 +17,6 @@
 // @match       https://exhentai.org/watched*
 // @match       https://exhentai.org/popular
 // @match       https://exhentai.org/favorites.php*
-// @match       https://exhentai.org/uploader/*
 // @match       https://exhentai.org/tag/*
 // @match		https://upld.exhentai.org/upld/manage
 // @match		https://upld.exhentai.org/upld/managegallery?gid=*
