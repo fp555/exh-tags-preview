@@ -1,12 +1,16 @@
 /* themes for e-h/exh */
 .ehstyle {
     --bdca: #5c0d1199;
+	--bdct: #806769;
+	--bgct: #f2efdf;
     background-color: #edebdf;
     border: 1px solid #5c0d11;
 }
 .exstyle {
     --bdca: #f1f1f199;
-    background-color: #4f535b;
+	--bdct: #989898;
+	--bgct: #4f535b;
+    background-color: var(--bgct);
 	border: 1px solid #f1f1f1;
 }
 
@@ -58,6 +62,14 @@
 }
 .tticon[data-tags]:hover > .tagstt {
 	visibility: visible;
+}
+.tagstt span.atag {
+	background: var(--bgct);
+	border: 1px solid var(--bdct);
+	border-radius: 5px;
+	font-weight: bold;
+	margin: 0 2px 5px 2px;
+	padding: 1px 4px;
 }
 	
 /* option button and panel */

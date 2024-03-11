@@ -11,7 +11,7 @@
     const content = JSON.parse(GM_getResourceText("content"));
     GM_addStyle(content.style);
 
-    // options panel setup
+    // options panel setup SPOSTAMI NEL MAIN
     const op = document.createRange().createContextualFragment(content.options);
     args.views.split('').forEach(v => op.querySelector(`input[name=views][value=${v}]`).checked = true);
     op.querySelector("input[name=newtab]").checked = args.newtab;
@@ -74,7 +74,7 @@
 									tds[0].classList.add("tc");
 									tds[0].append(`${k}:`);
 									tagsmap.get(k).forEach(v => {
-										const va = document.createElement("a");
+										const va = document.createElement("span");
 										va.classList.add("atag");
 										va.append(`${v}`);
 										tds[1].append(va);
