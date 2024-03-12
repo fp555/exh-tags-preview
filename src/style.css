@@ -48,16 +48,14 @@
 
 /* tags tooltip */
 .tagstt {
-	bottom: auto;
 	cursor: auto;
 	font-size: 9pt;
-	left: auto;
-	max-width: 40vw;
+	inset: auto;
+	max-width: 50vw;
 	padding: 5px;
 	position: absolute;
-	right: auto;
-	top: auto;
 	visibility: hidden;
+	width: max-content;
 	z-index: 1;
 }
 .tticon[data-tags]:hover > .tagstt {
@@ -67,9 +65,12 @@
 	background: var(--bgct);
 	border: 1px solid var(--bdct);
 	border-radius: 5px;
+	display: inline-block;
 	font-weight: bold;
 	margin: 0 2px 5px 2px;
 	padding: 1px 4px;
+	white-space: nowrap;
+	word-break: keep-all;
 }
 	
 /* option button and panel */
