@@ -89,18 +89,18 @@
 						// adjust tooltip positioning
 						const tt = i.querySelector(".tagstt");
 						if(window.innerHeight - ev.clientY < tt.offsetHeight) {
-							tt.style.setProperty("--b", "-3px"); //up
-							tt.style.setProperty("--t", "auto");
+							tt.style.setProperty("bottom", "-3px"); //up
+							tt.style.setProperty("top", "auto");
 						} else {
-							tt.style.setProperty("--b", "auto");
-							tt.style.setProperty("--t", "-3px"); //down
+							tt.style.setProperty("bottom", "auto");
+							tt.style.setProperty("top", "-3px"); //down
 						}
 						if(window.innerWidth - ev.clientX < tt.offsetWidth) {
-							tt.style.setProperty("--l", "auto");
-							tt.style.setProperty("--r", "10px"); //left
+							tt.style.setProperty("left", "auto");
+							tt.style.setProperty("right", "10px"); //left
 						} else {
-							tt.style.setProperty("--l", "10px"); //right
-							tt.style.setProperty("--r", "auto");
+							tt.style.setProperty("left", "10px"); //right
+							tt.style.setProperty("right", "auto");
 						}
 						i.toggleAttribute("data-tags", true);
 					});
