@@ -33,75 +33,69 @@
 		op.querySelector("input[name=newtab]").checked = args.newtab;
 		const ttopt = op.querySelector("#ttopt");
 		ttopt.onchange = function(e) {
-			e.stopPropagation(); // change events will all bubble here, no need to add listeners to all checkboxes
+			e.stopPropagation(); // change events will all bubble here
 			GM_setValue("exhtp.views", [...document.querySelectorAll("input[name=views]:checked")].map(v => v.value).join(''));
 			GM_setValue("exhtp.newtab", document.querySelector("input[name=newtab]").checked);
 		};
 		ttopt.classList.add(exh? "exstyle" : "ehstyle");
-		document.querySelector(".searchnav > div:last-child").prepend(op);
+		document.querySelector(".searchnav>div:last-child").prepend(op);
+		
+		// setup icon & tooltip
 		if(args.views.includes(document.querySelector(".searchnav select").value)) {
-			// setup icon & tooltip
 			document.querySelectorAll(".gl3m.glname,.gl3c.glname,.gl6t").forEach(g => g.append(document.createRange().createContextualFragment(content.tooltip)));
-			document.querySelectorAll(".tticon > .tagstt").forEach(t => t.classList.add(exh? "exstyle" : "ehstyle"));
+			document.querySelectorAll(".tticon>.tagstt").forEach(t => t.classList.add(exh? "exstyle" : "ehstyle"));
 			document.querySelectorAll(".tticon").forEach(i => i.onclick = (ev) => {
 				ev.stopPropagation();
-				// only fire on single click events
-				if(ev.detail === 1) {
+				if(ev.detail === 1) { // only fire on single click events
 					const getTags = new Promise(resolve => {
-						// if we already inserted tags, stop
-						if(i.hasAttribute("data-tags")) resolve(false);
-						else {
-							// fetch tags from E-H API
-							fetch("https://api.e-hentai.org/api.php", {
-								method: "POST",
-								headers: {"Content-Type": "application/json;charset=utf-8"},
-								body: JSON.stringify({
-									method: "gdata",
-									namespace: 1,
-									gidlist: [i.parentElement.querySelector("a").href.match(/(\d+)\/(\w+)\/$/).splice(1)]
-								})
-							}).then(result => {
-								if(!result.ok) throw new Error("fetch: error " + xhr.status);
-								return result.json();
-							}).then(response => {
-								const tagsmap = new Map();
-								const tt = document.createDocumentFragment();
-								response.gmetadata[0].tags.map(t => t.match(/(.+):(.+)/).slice(1)).forEach(([k, v]) => tagsmap.set(k, tagsmap.has(k)? [...tagsmap.get(k), v] : [v]));
-								// create tags table
-								[...tagsmap.keys()].forEach(k => {
-									const tds = [document.createElement("td"), document.createElement("td")];
-									tds[0].classList.add("tc");
-									tds[0].append(`${k}:`);
-									tagsmap.get(k).forEach(v => {
-										const va = document.createElement("span");
-										va.classList.add("atag");
-										va.append(`${v}`);
-										tds[1].append(va);
-									});
-									tt.appendChild(document.createElement("tr")).append(...tds);
+						if(i.hasAttribute("data-tags")) resolve(false); // if we already inserted tags, stop
+						
+						// if not, fetch tags from E-H API (https://ehwiki.org/wiki/API)
+						else fetch("https://api.e-hentai.org/api.php", {
+							method: "POST",
+							headers: {"Content-Type": "application/json;charset=utf-8"},
+							body: JSON.stringify({
+								method: "gdata",
+								namespace: 1,
+								gidlist: [i.parentElement.querySelector("a").href.match(/(\d+)\/(\w+)\/$/).splice(1)]
+							})
+						}).then(result => {
+							if(!result.ok) throw new Error("fetch: error " + xhr.status);
+							return result.json();
+						}).then(response => {
+							
+							// our API returns a simple array of strings "namespace:tag"
+							// to make it easier to work with, we transform it into a Map
+							// where namespaces are keys, and values are arrays of tags
+							const tagsmap = new Map();
+							response.gmetadata[0].tags.map(t => t.match(/(.+):(.+)/).slice(1)).forEach(([k, v]) => tagsmap.set(k, tagsmap.has(k)? [...tagsmap.get(k), v] : [v]));
+
+							// create tags table
+							const tt = document.createDocumentFragment();
+							[...tagsmap.keys()].forEach(k => {
+								const tds = [document.createElement("td"), document.createElement("td")];
+								tds[0].classList.add("tc");
+								tds[0].append(`${k}:`);
+								tagsmap.get(k).forEach(v => {
+									const vs = document.createElement("span");
+									vs.classList.add("atag");
+									vs.append(`${v}`);
+									tds[1].append(vs);
 								});
-								resolve(tt);
+								tt.appendChild(document.createElement("tr")).append(...tds);
 							});
-						}
+							resolve(tt);
+						});
 					});
 					getTags.then(ttags => {
 						if(ttags) i.querySelector("tbody").replaceChildren(ttags);
+
 						// adjust tooltip positioning
 						const tt = i.querySelector(".tagstt");
-						if(window.innerHeight - ev.clientY < tt.offsetHeight) {
-							tt.style.setProperty("bottom", "-3px"); //up
-							tt.style.setProperty("top", "auto");
-						} else {
-							tt.style.setProperty("bottom", "auto");
-							tt.style.setProperty("top", "-3px"); //down
-						}
-						if(window.innerWidth - ev.clientX < tt.offsetWidth) {
-							tt.style.setProperty("left", "auto");
-							tt.style.setProperty("right", "10px"); //left
-						} else {
-							tt.style.setProperty("left", "10px"); //right
-							tt.style.setProperty("right", "auto");
-						}
+						tt.style.setProperty("bottom", (window.innerHeight - ev.clientY < tt.offsetHeight)? "50%" : "auto"); //up
+						tt.style.setProperty("top", (window.innerHeight - ev.clientY < tt.offsetHeight)? "auto" : "50%"); //down
+						tt.style.setProperty("right", (window.innerWidth - ev.clientX < tt.offsetWidth)? "50%" : "auto"); //left
+						tt.style.setProperty("left", (window.innerWidth - ev.clientX < tt.offsetWidth)? "auto" : "50%"); //right
 						i.toggleAttribute("data-tags", true);
 					});
 				}
