@@ -18,8 +18,9 @@ jobs:
       id: gitbranch
       run: |
         echo "::group::Branch check"
-        echo "Working on branch $(git branch --show-current)"
-        echo "name=$(git branch --show-current)" >> $GITHUB_OUTPUT
+        echo "Working on commit $(git rev-parse HEAD)"
+        echo "Commit branch: $(git branch --contains $(git rev-parse HEAD) | head -n 1)"
+        echo "name=$(git branch --contains $(git rev-parse HEAD) | head -n 1)" >> $GITHUB_OUTPUT
         echo "::endgroup::"
 
     - name: Version check
