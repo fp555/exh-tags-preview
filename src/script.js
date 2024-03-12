@@ -11,19 +11,6 @@
     const content = JSON.parse(GM_getResourceText("content"));
     GM_addStyle(content.style);
 
-    // options panel setup SPOSTAMI NEL MAIN
-    const op = document.createRange().createContextualFragment(content.options);
-    args.views.split('').forEach(v => op.querySelector(`input[name=views][value=${v}]`).checked = true);
-    op.querySelector("input[name=newtab]").checked = args.newtab;
-    const ttopt = op.querySelector("#ttopt");
-    ttopt.onchange = function(e) {
-        e.stopPropagation(); // change events will all bubble here, no need to add listeners to all checkboxes
-        GM_setValue("exhtp.views", [...document.querySelectorAll("input[name=views]:checked")].map(v => v.value).join(''));
-        GM_setValue("exhtp.newtab", document.querySelector("input[name=newtab]").checked);
-    };
-    ttopt.classList.add(exh? "exstyle" : "ehstyle");
-    document.querySelector(".searchnav > div:last-child").prepend(op);
-	
 	// main
     switch(window.location.pathname) {
 	case "/upld/manage": // fix exh my uploads
@@ -40,6 +27,18 @@
 		break;
 
 	default:
+		// options panel setup
+		const op = document.createRange().createContextualFragment(content.options);
+		args.views.split('').forEach(v => op.querySelector(`input[name=views][value=${v}]`).checked = true);
+		op.querySelector("input[name=newtab]").checked = args.newtab;
+		const ttopt = op.querySelector("#ttopt");
+		ttopt.onchange = function(e) {
+			e.stopPropagation(); // change events will all bubble here, no need to add listeners to all checkboxes
+			GM_setValue("exhtp.views", [...document.querySelectorAll("input[name=views]:checked")].map(v => v.value).join(''));
+			GM_setValue("exhtp.newtab", document.querySelector("input[name=newtab]").checked);
+		};
+		ttopt.classList.add(exh? "exstyle" : "ehstyle");
+		document.querySelector(".searchnav > div:last-child").prepend(op);
 		if(args.views.includes(document.querySelector(".searchnav select").value)) {
 			// setup icon & tooltip
 			document.querySelectorAll(".gl3m.glname,.gl3c.glname,.gl6t").forEach(g => g.append(document.createRange().createContextualFragment(content.tooltip)));
