@@ -1,5 +1,5 @@
-<div class=ttoptb onclick='document.location.hash="ttopt"'>
-	<svg height=24px viewBox="0 0 128 128"width=24px xmlns=http://www.w3.org/2000/svg>
+<div class=ttoptb>
+	<svg viewBox="0 0 128 128" xmlns=http://www.w3.org/2000/svg>
 		<linearGradient gradientTransform="matrix(1 0 0 1 0 -714)"gradientUnits=userSpaceOnUse id=SVGID_1_ x1=63.9799 x2=63.9799 y1=837.02 y2=718.6437>
 			<stop offset=2.291900e-03 stop-color=#9E9E9E />
 			<stop offset=0.2862 stop-color=#ADADAD />
@@ -19,20 +19,14 @@
 		</g>
 	</svg>
 	<form id=ttopt name=ttopt>
-		<a class=closebutton href=#>×</a>
-		<fieldset>
-			<legend>Tooltip on:</legend>
-			<label><input name=mode type=radio value=icon>Icon</label>
-			<label><input name=mode type=radio value=legacy>Title</label>
-		</fieldset>
 		<fieldset>
 			<legend>Enable in layouts:</legend>
-			<label><input name=views type=checkbox value=m>Minimal</label>
-			<label><input name=views type=checkbox value=p>Minimal+</label>
-			<label><input name=views type=checkbox value=l>Compact</label>
-			<label><input name=views type=checkbox value=t>Thumbnail</label>
+			<label><input name=views type=checkbox value=m>Minimal</label><br>
+			<label><input name=views type=checkbox value=p>Minimal+</label><br>
+			<label><input name=views type=checkbox value=l>Compact</label><br>
+			<label><input name=views type=checkbox value=t>Thumbnail</label><br>
 		</fieldset>
-		<label><input name=newtab type=checkbox>Open gallery in a new tab</label>
+		<label><input name=newtab type=checkbox>Open gallery in a new tab</label><br>
 		<span>
 			<a href="javascript:window.location.reload(true)">Reload</a> page to apply
 		</span>

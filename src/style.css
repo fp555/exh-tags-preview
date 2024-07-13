@@ -1,116 +1,149 @@
 /* themes for e-h/exh */
 .ehstyle {
-    --bdc: #5c0d11;
     --bdca: #5c0d1199;
-    --bgc: #edebdf;
-    background-color: var(--bgc);
-    border: 1px solid var(--bdc);
+	--bdct: #806769;
+	--bgct: #f2efdf;
+    background-color: #edebdf;
+    border: 1px solid #5c0d11;
 }
 .exstyle {
-    --bdc: #f1f1f1;
     --bdca: #f1f1f199;
-    --bgc: #4f535b;
-    background-color: var(--bgc);
-	border: 1px solid var(--bdc);
+	--bdct: #989898;
+	--bgct: #4f535b;
+    background-color: var(--bgct);
+	border: 1px solid #f1f1f1;
 }
 
-/* icon and tooltip positioning rules */
 .glname {
     display: flex;
 	justify-content: space-between;
+	
+	/* tags icon */
+	& > .tticon {
+		align-self: center;
+		cursor: pointer;
+		flex: 0 0 auto;
+		height: 16px;
+		margin-left: 8px;
+		position: relative;
+		width: 16px;
+		
+		& > svg {
+			color: inherit;
+			height: 100%;
+			width: 100%;
+			
+			&.icon-eye-slash {
+				display: inline;
+				
+				[data-tags] > & {
+					display: none;
+				}
+			}
+			
+			&.icon-tags {
+				display: none;
+				
+				[data-tags] > & {
+					display: inline;
+				}
+			}
+		}
+		
+		/* tags tooltip */
+		& > .tagstt {
+			cursor: auto;
+			font-size: 9pt;
+			inset: auto;
+			max-width: 40vw;
+			padding: 5px;
+			position: absolute;
+			visibility: hidden;
+			width: max-content;
+			z-index: 1;
+			
+			[data-tags]:hover > & {
+				visibility: visible;
+			}
+			
+			& span.stag {
+				background: var(--bgct);
+				border: 1px solid var(--bdct);
+				border-radius: 5px;
+				display: inline-block;
+				font-weight: bold;
+				margin: 0 2px 5px 2px;
+				padding: 1px 4px;
+				white-space: nowrap;
+				word-break: keep-all;
+			}
+		}
+	}
 }
-.svgicon {
-    align-self: center;
-    cursor: pointer;
-    padding-left: 8px;
-}
-.gl3m > .svgicon {
-	height: 20px;
-	min-width: 20px;
-}
-.gl3c > .svgicon {
-	height: 24px;
-	min-width: 24px;
-}
-.gl6t > .svgicon {
-	height: 16px;
-	min-width: 16px;
-}
-#tagstt {
-    --l: initial;
-    --t: initial;
-    --v: hidden;
-	font-size: 9pt;
-	left: var(--l);
-	max-width: 400px;
-	padding: 5px;
-	position: absolute;
-	top: var(--t);
-	visibility: var(--v);
-	z-index: 100;
-}
-
+	
 /* option button and panel */
-.ttoptb {
-	bottom: 0;
-	cursor: pointer;
-	padding: 0 5px 5px 0;
-	position: fixed;
-	right: 0;
-	z-index: 101;
-}
-#ttopt {
-    bottom: 42px;
-    cursor: auto;
-    font-size: 9pt;
-    padding: 8px;
-    position: absolute;
-    right: 5px;
-    text-align: left;
-    visibility: hidden;
-    width: max-content;
-}
-#ttopt:target {
-    visibility: visible;
-}
-#ttopt::after {
-    border-bottom-color: transparent;
-    border-left-color: transparent;
-    border-right-color: transparent;
-    border-top-color: inherit;
-    border-style: solid;
-    border-width: 10px;
-    content: "";
-    position: absolute;
-    right: 5px;
-    top: 100%;
-}
-#ttopt > .closebutton {
-    font-size: 12pt;
-    font-weight: bold;
-    margin-left: 95%;
-    text-decoration: none;
-}
-#ttopt fieldset {
-    margin-bottom: 5px;
-    border-color: inherit;
-    border-style: solid;
-    border-width: 1px;
-}
-#ttopt label {
-    display: block;
-}
-#ttopt input[type="checkbox"] {
-	margin-right: 6px;
-}
-#ttopt > span {
-    color: var(--bdca);
-    display: block;
-    margin-top: 12px;
-    text-align: center;
-}
-
-/* fix for selects slightly too small */
-.searchnav select {
-	width: fit-content;
+.searchnav > div:last-child {
+	align-items: center;
+	column-gap: 5px;
+	display: flex;
+	justify-content: flex-end;
+	
+	& > .ttoptb {
+		cursor: pointer;
+		height: 16px;
+		position: relative;
+		width: 16px;
+		
+		& > #ttopt {
+			cursor: auto;
+			font-size: 9pt;
+			padding: 8px;
+			position: absolute;
+			right: 26px;
+			text-align: left;
+			top: -3px;
+			visibility: hidden;
+			width: max-content;
+			z-index: 2;
+			
+			&::after {
+				border-bottom-color: transparent;
+				border-left-color: inherit;
+				border-right-color: transparent;
+				border-top-color: transparent;
+				border-style: solid;
+				border-width: 10px;
+				content: "";
+				left: 100%;
+				position: absolute;
+				top: 3px;
+			}
+			
+			& > fieldset {
+				margin-bottom: 5px;
+				border-color: inherit;
+				border-style: solid;
+				border-width: 1px;
+			}
+			
+			& input[type="checkbox"] {
+				margin-right: 6px;
+			}
+			
+			& > span {
+				color: var(--bdca);
+				display: block;
+				margin-top: 12px;
+				text-align: center;
+			}
+		}
+		
+		&:hover > #ttopt {
+			visibility: visible;
+		}
+	}
+	
+	& > select {
+		width: fit-content;
+	}
 }
