@@ -17,66 +17,66 @@
 .glname {
     display: flex;
 	justify-content: space-between;
+}
 	
-	/* tags icon */
-	& > .tticon {
-		align-self: center;
-		cursor: pointer;
-		flex: 0 0 auto;
-		height: 16px;
-		margin-left: 8px;
-		position: relative;
-		width: 16px;
+/* tags icon */
+.gl3m.glname > .tticon, .gl3c.glname > .tticon, .gl6t > .tticon {
+	align-self: center;
+	cursor: pointer;
+	flex: 0 0 auto;
+	height: 16px;
+	margin-left: 8px;
+	position: relative;
+	width: 16px;
+	
+	& > svg {
+		color: inherit;
+		height: 100%;
+		width: 100%;
 		
-		& > svg {
-			color: inherit;
-			height: 100%;
-			width: 100%;
+		&.icon-eye-slash {
+			display: inline;
 			
-			&.icon-eye-slash {
-				display: inline;
-				
-				[data-tags] > & {
-					display: none;
-				}
-			}
-			
-			&.icon-tags {
+			[data-tags] > & {
 				display: none;
-				
-				[data-tags] > & {
-					display: inline;
-				}
 			}
 		}
 		
-		/* tags tooltip */
-		& > .tagstt {
-			cursor: auto;
-			font-size: 9pt;
-			inset: auto;
-			max-width: 40vw;
-			padding: 5px;
-			position: absolute;
-			visibility: hidden;
-			width: max-content;
-			z-index: 1;
+		&.icon-tags {
+			display: none;
 			
-			[data-tags]:hover > & {
-				visibility: visible;
+			[data-tags] > & {
+				display: inline;
 			}
-			
-			& span.stag {
-				background: var(--bgct);
-				border: 1px solid var(--bdct);
-				border-radius: 5px;
-				display: inline-block;
-				font-weight: bold;
-				margin: 0 2px 5px 2px;
-				padding: 1px 4px;
-				white-space: nowrap;
-				word-break: keep-all;
-			}
+		}
+	}
+	
+	/* tags tooltip */
+	& > .tagstt {
+		cursor: auto;
+		font-size: 9pt;
+		inset: auto;
+		max-width: 40vw;
+		padding: 5px;
+		position: absolute;
+		visibility: hidden;
+		width: max-content;
+		z-index: 101;
+		
+		[data-tags]:hover > & {
+			visibility: visible;
+		}
+		
+		& span.stag {
+			background: var(--bgct);
+			border: 1px solid var(--bdct);
+			border-radius: 5px;
+			display: inline-block;
+			font-weight: bold;
+			margin: 0 2px 5px 2px;
+			padding: 1px 4px;
+			white-space: nowrap;
+			word-break: keep-all;
 		}
 	}
 }
@@ -104,7 +104,7 @@
 			top: -3px;
 			visibility: hidden;
 			width: max-content;
-			z-index: 2;
+			z-index: 102;
 			
 			&::after {
 				border-bottom-color: transparent;
