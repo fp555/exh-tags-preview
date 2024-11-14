@@ -57,7 +57,7 @@
 							body: JSON.stringify({
 								method: "gdata",
 								namespace: 1,
-								gidlist: [i.parentElement.querySelector("a").href.match(/(\d+)\/(\w+)\/$/).splice(1)]
+								gidlist: [i.closest(".gl3m,.gl3c,.gl1t").querySelector("a").href.match(/(\d+)\/(\w+)\/$/).splice(1)]
 							})
 						}).then(result => {
 							if(!result.ok) throw new Error("fetch: error " + xhr.status);
