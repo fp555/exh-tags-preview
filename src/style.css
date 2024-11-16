@@ -14,7 +14,7 @@
 	border: 1px solid #f1f1f1;
 }
 
-.glname {
+.gl3m.glname, .gl3c.glname {
     display: flex;
 	justify-content: space-between;
 }
