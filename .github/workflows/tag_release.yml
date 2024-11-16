@@ -22,6 +22,8 @@ jobs:
         [[ $(awk '/@version/ {printf "v%s",$3}' script.meta.js) == $GITHUB_REF_NAME ]]
         echo "Resource tag: $(awk '/@resource/ {split($4,F,"/"); print F[8]}' script.meta.js)"
         [[ $(awk '/@resource/ {split($4,F,"/"); print F[8]}' script.meta.js) == $GITHUB_REF_NAME ]]
+        echo "Icon tag: $(awk '/@icon/ {split($3,F,"/"); print F[7]}' script.meta.js)"
+        [[ $(awk '/@icon/ {split($3,F,"/"); print F[7]}' script.meta.js) == $GITHUB_REF_NAME ]]
         echo "::endgroup::"
     
     - name: Build userscript
