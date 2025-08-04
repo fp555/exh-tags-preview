@@ -86,7 +86,7 @@
 /* option button and panel */
 .searchnav > div:last-child {
 	align-items: center;
-	column-gap: 5px;
+	column-gap: 0.5em;
 	display: flex;
 	justify-content: flex-end;
 	
@@ -129,14 +129,12 @@
 			}
 			
 			& input[type="checkbox"] {
-				margin-right: 6px;
+				margin-right: 0.5em;
 			}
 			
-			& > span {
-				color: var(--bdca);
+			& > input[type="submit"] {
 				display: block;
-				margin-top: 12px;
-				text-align: center;
+				margin: 1em auto 0;
 			}
 		}
 		
