@@ -1,17 +1,18 @@
 # E(x)-Hentai Tags Preview :panda_face::label::mag:
-This is an **unofficial** userscript, compatible with both panda websites, that shows a table with all tags assigned to a gallery that seamlessly blends with native page layouts. If you don't like the native *Extended* view, and others don't give you enough information, give this a try.
+This is an **unofficial** userscript, compatible with both panda websites, that shows a table with all tags assigned to a gallery, seamlessly blending in with native page layouts. Basically, this exists because I don't like the *Extended* layout, and others don't give me enough information.
 
-## Installation
-If your browser does not natively support userscripts, install something like [Tampermonkey](https://tampermonkey.net/) or [Violentmonkey](https://violentmonkey.github.io/get-it/), then grab the [latest userscript release](https://github.com/fp555/exh-tags-preview/releases/latest/download/script.user.js).
+## Usage
+Make sure you are using either [Tampermonkey](https://tampermonkey.net/) or [Violentmonkey](https://violentmonkey.github.io/get-it/), then grab the [latest userscript release](https://github.com/fp555/exh-tags-preview/releases/latest/download/script.user.js).
 
-This userscript has some configuration options, for your convenience you can change them from the :gear: icon that gets added next to the layout selector. [Check your release notes](https://github.com/fp555/exh-tags-preview/releases) for more details on available settings.
+This userscript adds a little configuration panel into "list-type pages": hover on the :gear: icon next to the layout selector to access all options.
 
 ## Troubleshooting
 Before [opening an issue](https://github.com/fp555/exh-tags-preview/issues/new) please:
-1) Stop using weird and outdated browsers that don't support basic web standards or modern CSS/JS features;
+1) Make sure the problem also exists on the latest Chrome/Chromium/Edge/Firefox/Safari;
 2) Make sure your userscript manager is updated to the latest available version;
 3) Make sure you are using the [latest release of the userscript](https://github.com/fp555/exh-tags-preview/releases/latest);
-4) Make sure your issue isn't listed in the section below.
+4) Make sure you're not using other userscripts that significantly alter E-H/ExH pages;
+5) Make sure your issue isn't listed in the section below.
 
 ### Known issues & limitations
 You could get an empty tooltip (or no tooltip at all) if:
@@ -19,13 +20,24 @@ You could get an empty tooltip (or no tooltip at all) if:
 - A gallery is inaccessible (permanently deleted, copyright claimed, banned in your country...);
 - E-H API is acting up (check your browser console).
 
-### Missing features & requests
-If it's something that's not too unrelated to the purpose of this userscript, [open an issue](https://github.com/fp555/exh-tags-preview/issues/new) and convince me to work on it. If you look closely you can see I already added tiny little fixes that are unrelated to displaying tags.
+Due to the heavy reliance on modern CSS/JS features and APIs, this userscript is only supposed to work on:
+- Chrome/Chromium/Edge **v120+**
+- Firefox **v117+**
+- Safari **v17.2+**
+- Tammpermonkey **v5.3.0+**
+- Violentmonkey **v2.19.1+**
+
+While it's definitely possible to rewrite some code in order to make it work on older browsers, I have no interest in mantaining such a thing.
+
+### Feature requests
+If it's something that's not too unrelated to the purpose of this userscript, [open an issue](https://github.com/fp555/exh-tags-preview/issues/new) and convince me to work on it.
 
 If you end up creating your own version of this userscript consider [creating a pull request](https://help.github.com/articles/creating-a-pull-request/) if you'd like me to merge your changes.
 
 ### Is this spyware?
-I couldn't care less about your disgusting fetishes: I already have mine, and I can guarantee they're objectively better than yours :smirk:. Your questionable browsing history shall remain between you and your assigned glow-in-the-dark agent, 'cause I don't want anything to do with it. This userscript was originally made for personal use and convenience, and the idea of collecting user data has never crossed my mind. Luckily for you the source code is right here, you can just, like... read it or something.
+I couldn't care less about your disgusting fetishes: I already have mine, and I can guarantee they're objectively better than yours :smirk:. Rest assured that this userscript isn't going to help your assigned glow-in-the-dark agent collect your questionable browsing history. This userscript was originally made for personal use and convenience, and I still have no use nor time to waste for such features.
+
+If you're too smart to simply believe whatever strangers write on the Internet, the source code is right here, you can just, like... read it or something.
 
 ### How do I get past the panda?
 LURK MOAR NEWFAG

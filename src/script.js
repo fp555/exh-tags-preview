@@ -1,8 +1,8 @@
 ((args) => {
     "use strict";
 
-     // save defaults on 1st run
-    for(const c in args) GM_getValue("exhtp." + c, false) || GM_setValue("exhtp." + c, args[c]);
+    // save defaults on 1st run
+	GM_setValues(args);
 
     // is it ExH or E-H?
     const exh = location.host.substr(0,2) === "ex";
@@ -33,8 +33,10 @@
 		const ttopt = op.querySelector("#ttopt");
 		ttopt.onchange = function(e) {
 			e.stopPropagation(); // change events will all bubble here
-			GM_setValue("exhtp.views", [...document.querySelectorAll("input[name=views]:checked")].map(v => v.value).join(''));
-			GM_setValue("exhtp.newtab", document.querySelector("input[name=newtab]").checked);
+			GM_setValues({
+				views: [...document.querySelectorAll("input[name=views]:checked")].map(v => v.value).join(''),
+				newtab: document.querySelector("input[name=newtab]").checked
+			});
 		};
 		ttopt.classList.add(exh? "exstyle" : "ehstyle");
 		document.querySelector(".searchnav>div:last-child").prepend(op);
@@ -100,7 +102,4 @@
 		});
 		return tt;
 	}
-})({ // the default values
-    views: GM_getValue("exhtp.views", "m"),
-    newtab: GM_getValue("exhtp.newtab", true)
-});
+})(GM_getValues({ views: "m", newtab: true })); // default values

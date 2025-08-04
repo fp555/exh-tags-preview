@@ -24,8 +24,8 @@
 // @connect     self
 // @grant       GM_addStyle
 // @grant       GM_getResourceText
-// @grant       GM_getValue
-// @grant       GM_setValue
+// @grant       GM_getValues
+// @grant       GM_setValues
 // @resource	content https://github.com/fp555/exh-tags-preview/releases/download/v1.9.6/content.json
 // @downloadURL	https://github.com/fp555/exh-tags-preview/releases/latest/download/script.user.js
 // @homepage	https://github.com/fp555/exh-tags-preview
