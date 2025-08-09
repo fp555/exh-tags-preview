@@ -2,7 +2,7 @@
 // @name        E(x)Hentai Tags Preview
 // @author      fp555
 // @namespace   fp555/exh-tags-preview
-// @version     1.9.6
+// @version     1.10.0-dev
 // @description Fetch and preview all tags from a gallery.
 // @match       https://e-hentai.org/
 // @match       https://e-hentai.org/?f_search=*
@@ -26,33 +26,9 @@
 // @grant       GM_getResourceText
 // @grant       GM_getValues
 // @grant       GM_setValues
-// @resource	content https://github.com/fp555/exh-tags-preview/releases/download/v1.9.6/content.json
+// @resource	content https://github.com/fp555/exh-tags-preview/releases/download/1.10.0-dev/content.json
 // @downloadURL	https://github.com/fp555/exh-tags-preview/releases/latest/download/script.user.js
 // @homepage	https://github.com/fp555/exh-tags-preview
-// @icon        https://github.com/fp555/exh-tags-preview/raw/v1.9.6/panda.png
+// @icon        https://github.com/fp555/exh-tags-preview/raw/1.10.0-dev/panda.png
 // ==/UserScript==
-
-/* MIT License
- * https://raw.githubusercontent.com/fp555/exh-tags-preview/master/LICENSE
- *
- * Copyright (c) 2018-2024 fp555
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
-*/
 

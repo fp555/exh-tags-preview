@@ -30,14 +30,12 @@ Due to the heavy reliance on modern CSS/JS features and APIs, this userscript is
 While it's definitely possible to rewrite some code in order to make it work on older browsers, I have no interest in mantaining such a thing.
 
 ### Feature requests
-If it's something that's not too unrelated to the purpose of this userscript, [open an issue](https://github.com/fp555/exh-tags-preview/issues/new) and convince me to work on it.
+If it's something that's not too unrelated to the purpose of this userscript, [open an issue](https://github.com/fp555/exh-tags-preview/issues/new) and convince me to work on it. If you end up creating your own version of this userscript consider [creating a pull request](https://help.github.com/articles/creating-a-pull-request/) if you'd like me to merge your changes.
 
-If you end up creating your own version of this userscript consider [creating a pull request](https://help.github.com/articles/creating-a-pull-request/) if you'd like me to merge your changes.
+### Disclaimer
+I couldn't care less about your disgusting fetishes: I already have mine, and I can guarantee they're objectively better than yours :smirk:. Your assigned glow-in-the-dark agent can collect your questionable browsing history just fine without my help. In the meantime, just stop believing whatever strangers write on the Internet, especially if the swear they're trustworthy, and start reading the source code.
 
-### Is this spyware?
-I couldn't care less about your disgusting fetishes: I already have mine, and I can guarantee they're objectively better than yours :smirk:. Rest assured that this userscript isn't going to help your assigned glow-in-the-dark agent collect your questionable browsing history. This userscript was originally made for personal use and convenience, and I still have no use nor time to waste for such features.
-
-If you're too smart to simply believe whatever strangers write on the Internet, the source code is right here, you can just, like... read it or something.
+You're welcome.
 
 ### How do I get past the panda?
 LURK MOAR NEWFAG
