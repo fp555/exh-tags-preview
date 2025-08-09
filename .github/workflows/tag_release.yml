@@ -18,12 +18,12 @@ jobs:
       run: |
         echo "::group::Version check"
         echo "Github tag: $GITHUB_REF_NAME"
-        echo "Version tag: $(awk '/@version/ {printf "v%s",$3}' script.meta.js)"
+        echo "Version tag: $(awk '/@version/ {print $3}' script.meta.js)"
         [[ $(awk '/@version/ {printf "v%s",$3}' script.meta.js) == $GITHUB_REF_NAME ]]
         echo "Resource tag: $(awk '/@resource/ {split($4,F,"/"); print F[8]}' script.meta.js)"
-        [[ $(awk '/@resource/ {split($4,F,"/"); print F[8]}' script.meta.js) == $GITHUB_REF_NAME ]]
+        [[ $(awk '/@resource/ {split($4,F,"/"); printf "v%s", F[8]}' script.meta.js) == $GITHUB_REF_NAME ]]
         echo "Icon tag: $(awk '/@icon/ {split($3,F,"/"); print F[7]}' script.meta.js)"
-        [[ $(awk '/@icon/ {split($3,F,"/"); print F[7]}' script.meta.js) == $GITHUB_REF_NAME ]]
+        [[ $(awk '/@icon/ {split($3,F,"/"); printf "v%s", F[7]}' script.meta.js) == $GITHUB_REF_NAME ]]
         echo "::endgroup::"
     
     - name: Build userscript

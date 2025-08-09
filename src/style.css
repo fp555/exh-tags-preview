@@ -42,7 +42,6 @@
 		
 		.fetched > &.icon-eye-slash,
 		:not(.fetched) > &.icon-tags {
-		{
 			display: none;
 		}
 	}
