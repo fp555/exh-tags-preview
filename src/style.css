@@ -14,18 +14,21 @@
 	border: 1px solid #f1f1f1;
 }
 
-.gl3m.glname, .gl3c.glname {
+.gl3m.glname,
+.gl3c.glname {
     display: flex;
 	justify-content: space-between;
 }
 	
 /* tags icon */
-.gl3m.glname > .tticon, .gl3c.glname > .tticon, .gl6t > .tticon {
+.gl3m.glname > .tticon,
+.gl3c.glname > .tticon,
+.gl6t > .tticon {
 	align-self: center;
 	cursor: pointer;
 	flex: 0 0 auto;
 	height: 16px;
-	margin-left: 8px;
+	margin-left: 0.75em;
 	overflow: visible;
 	position: relative;
 	white-space: wrap;
@@ -33,23 +36,14 @@
 	
 	& > svg {
 		color: inherit;
+		display: inline;
 		height: 100%;
 		width: 100%;
 		
-		&.icon-eye-slash {
-			display: inline;
-			
-			[data-tags] > & {
-				display: none;
-			}
-		}
-		
-		&.icon-tags {
+		.fetched > &.icon-eye-slash,
+		:not(.fetched) > &.icon-tags {
+		{
 			display: none;
-			
-			[data-tags] > & {
-				display: inline;
-			}
 		}
 	}
 	
@@ -65,8 +59,24 @@
 		width: max-content;
 		z-index: 101;
 		
-		[data-tags]:hover > & {
+		.fetched:hover > & {
 			visibility: visible;
+		}
+		
+		&.ttup {
+			bottom: 50%;
+		}
+		
+		&.ttdown {
+			top: 50%;
+		}
+		
+		&.ttleft {
+			right: 50%;
+		}
+		
+		&.ttright {
+			left: 50%;
 		}
 		
 		& span.stag {
@@ -99,7 +109,7 @@
 		& > #ttopt {
 			cursor: auto;
 			font-size: 9pt;
-			padding: 8px;
+			padding: 0.75em;
 			position: absolute;
 			right: 26px;
 			text-align: left;
@@ -107,12 +117,14 @@
 			visibility: hidden;
 			width: max-content;
 			z-index: 102;
+		
+			:hover > & {
+				visibility: visible;
+			}
 			
 			&::after {
-				border-bottom-color: transparent;
+				border-color: transparent;
 				border-left-color: inherit;
-				border-right-color: transparent;
-				border-top-color: transparent;
 				border-style: solid;
 				border-width: 10px;
 				content: "";
@@ -122,7 +134,7 @@
 			}
 			
 			& > fieldset {
-				margin-bottom: 5px;
+				margin-bottom: 0.5em;
 				border-color: inherit;
 				border-style: solid;
 				border-width: 1px;
@@ -136,10 +148,6 @@
 				display: block;
 				margin: 1em auto 0;
 			}
-		}
-		
-		&:hover > #ttopt {
-			visibility: visible;
 		}
 	}
 	

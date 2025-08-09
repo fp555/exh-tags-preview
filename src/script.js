@@ -28,35 +28,37 @@
 	default:
 		// options panel setup
 		const op = document.createRange().createContextualFragment(content.options);
-		args.views.split('').forEach(v => op.querySelector(`input[name=views][value=${v}]`).checked = true);
+		args.views.split('').forEach(v => op.querySelector(`input[name=views_${v}]`).checked = true);
 		op.querySelector("input[name=newtab]").checked = args.newtab;
 		const ttopt = op.querySelector("#ttopt");
-		ttopt.onchange = function(e) {
+		ttopt.onchange = e => {
 			e.stopPropagation(); // change events will all bubble here
 			GM_setValues({
-				views: [...document.querySelectorAll("input[name=views]:checked")].map(v => v.value).join(''),
-				newtab: document.querySelector("input[name=newtab]").checked
+				views: [...op.querySelectorAll("input[name^=views]:checked")].map(v => v.name.slice(-1)).join(''),
+				newtab: op.querySelector("input[name=newtab]").checked
 			});
 		};
 		ttopt.classList.add(exh? "exstyle" : "ehstyle");
 		document.querySelector(".searchnav>div:last-child").prepend(op);
 		// setup icon & tooltip
 		if(args.views.includes(document.querySelector(".searchnav select").value)) {
-			document.querySelectorAll(".gl3m.glname,.gl3c.glname,.gl6t").forEach(g => g.append(document.createRange().createContextualFragment(content.tooltip)));
-			document.querySelectorAll(".tticon>.tagstt").forEach(t => t.classList.add(exh? "exstyle" : "ehstyle"));
-			document.querySelectorAll(".tticon").forEach(i => i.onclick = (ev) => {
-				ev.stopPropagation();
-				// only fetch if single click event and tags not already inserted
-				if(ev.detail === 1 && !i.hasAttribute("data-tags")) getTags(i.closest(".gl3m,.gl3c,.gl1t").querySelector("a").href.match(/(\d+)\/(\w+)\/$/).splice(1)).then(response => {
-					i.querySelector("tbody").replaceChildren(tagsTable(response));
-					// adjust tooltip positioning
-					const tt = i.querySelector(".tagstt");
-					tt.style.setProperty("bottom", (window.innerHeight - ev.clientY < tt.offsetHeight)? "50%" : "auto"); //up
-					tt.style.setProperty("top", (window.innerHeight - ev.clientY < tt.offsetHeight)? "auto" : "50%"); //down
-					tt.style.setProperty("right", (window.innerWidth - ev.clientX < tt.offsetWidth)? "50%" : "auto"); //left
-					tt.style.setProperty("left", (window.innerWidth - ev.clientX < tt.offsetWidth)? "auto" : "50%"); //right
-					i.toggleAttribute("data-tags", true);
-				});
+			document.querySelectorAll(".gl3m.glname,.gl3c.glname,.gl6t").forEach(g => {
+				const tt = document.createRange().createContextualFragment(content.tooltip);
+				const ti = tt.querySelector(".tticon");
+				ti.onclick = async (ev) => {
+					ev.stopPropagation();
+					// only fetch if single click event and tags not already fetched
+					if(ev.detail === 1 && !ti.classList.contains("fetched")) {
+						ti.querySelector("tbody").replaceChildren(tagsTable(await getTags(g.closest(".gl3m,.gl3c,.gl1t").querySelector("a").href.match(/(\d+)\/(\w+)\/$/).splice(1))));
+						// adjust tooltip positioning
+						ti.querySelector(".tagstt").classList.add(
+						  (window.innerHeight - ev.clientY < ti.offsetHeight)? "ttup" : "ttdown",
+						  (window.innerWidth - ev.clientX < ti.offsetWidth)? "ttleft" : "ttright");
+						ti.classList.add("fetched");
+					}
+				}
+				tt.querySelector(".tagstt").classList.add(exh? "exstyle" : "ehstyle");
+				g.append(tt);
 			});
 		}
 		// open galleries in a new tab
@@ -66,7 +68,7 @@
 	
 	// fetch tags from E-H API (https://ehwiki.org/wiki/API)
 	const getTags = async (gid) => {
-		const res = await fetch("https://api.e-hentai.org/api.php", {
+		const req = await fetch("https://api.e-hentai.org/api.php", {
 			method: "POST",
 			headers: {"Content-Type": "application/json;charset=utf-8"},
 			body: JSON.stringify({
@@ -75,8 +77,8 @@
 				gidlist: [gid]
 			})
 		});
-		if(!res.ok) throw new Error("fetch: error " + xhr.status);
-		else return await res.json();
+		if(!req.ok) throw new Error("fetch: error " + req.status);
+		else return await req.json();
 	}
 	
 	// assemble tooltip contents
